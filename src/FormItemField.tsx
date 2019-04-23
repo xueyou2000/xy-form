@@ -6,12 +6,16 @@ import { FormContext } from "./Context/FormContext";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
+import { FormItemContext } from "./Context/FormItemContext";
+import { Separator } from "./Form";
 
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const { prop, children, defaultValue, normalize, depends, label, disabledValidate, onValidate } = props;
+    const { prop, children, defaultValue, normalize, label, disabledValidate, onValidate } = props;
     const blockContext = useContext(FormBlockContext);
     const formContext = useContext(FormContext);
-
+    const formItemContext = useContext(FormItemContext);
+    const parentProp = blockContext.prop ? blockContext.prop + Separator : "";
+    const inputRef = useRef<any>();
     const initialValue = useRef(blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue);
     const disabled = formContext.disabled;
     const trigger = props.trigger || formContext.trigger;
@@ -23,11 +27,11 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
 
     const itemState: FormItemState = {
         rest,
-        setValidateResult,
+        ref: inputRef,
+        setValidateResult: changeValidateResult,
         setValue: changeValue,
         getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current),
         getLabel: () => label,
-        getDepends: () => depends,
         getValidateResult: () => validateResult
     };
 
@@ -42,9 +46,12 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     function changeValidateResult(result: ValidateResult) {
         if (validateResult.status !== result.status) {
             if (onValidate) {
-                onValidate(value, result, normalize);
+                onValidate(value, result, inputRef.current, normalize);
             }
             setValidateResult(result);
+            if (formItemContext && formItemContext.onValidateChange) {
+                formItemContext.onValidateChange(prop, result);
+            }
         }
     }
 
@@ -60,7 +67,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     function validate(_trigger?: ValidateTrigger) {
         if ((_trigger & trigger) !== 0) {
             blockContext
-                .fieldValidate(prop, lastValue.current, _trigger)
+                .fieldValidate(prop, lastValue.current, inputRef.current, _trigger)
                 .then(() => {
                     changeValidateResult({ status: true, msg: null });
                 })
@@ -97,6 +104,8 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
               Object.assign({}, child.props, {
                   value,
                   key: prop,
+                  name: parentProp + prop,
+                  ref: inputRef,
                   disabled: disabled,
                   onBlur: blurHandle,
                   onChange: changeHandle,

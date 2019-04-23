@@ -48,7 +48,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     function validateField(prop: string) {
         const state = getFieldItemState(prop);
         if (onFieldValidate) {
-            return onFieldValidate(prop, state.getValue())
+            return onFieldValidate(prop, state.ref.current, state.getValue())
                 .then(() => {
                     state.setValidateResult({ status: true, msg: null });
                 })

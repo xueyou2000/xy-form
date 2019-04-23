@@ -56,7 +56,7 @@ export interface FormProps extends Partial<FormContextState> {
     /**
      * 字段需要验证事件
      */
-    onFieldValidate?: (prop: string, value: any, trigger?: ValidateTrigger) => Promise<any>;
+    onFieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
     /**
      * 开始点击提交按钮
      */
@@ -162,11 +162,6 @@ export interface FormItemFieldProps<T = any, NormalizeResult = any> {
      */
     defaultValue?: T;
     /**
-     * 依赖字段全名
-     * @description 依赖的值更新了，自己也会重新渲染
-     */
-    depends?: string[];
-    /**
      * 规范化函数
      * @description 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串
      */
@@ -178,7 +173,7 @@ export interface FormItemFieldProps<T = any, NormalizeResult = any> {
     /**
      * 执行验证事件
      */
-    onValidate?: (value: T, validateResult: ValidateResult, normalize?: (value: T) => NormalizeResult) => void;
+    onValidate?: (value: T, validateResult: ValidateResult, input: HTMLElement, normalize?: (value: T) => NormalizeResult) => void;
 }
 
 export interface FormItemState {
@@ -186,11 +181,6 @@ export interface FormItemState {
      * 获取字段值
      */
     getValue: () => any;
-    /**
-     * 获取依赖字段全名
-     * @description 依赖的值更新了，自己也会重新渲染
-     */
-    getDepends?: () => string[];
     /**
      * 设置字段值
      */
@@ -204,6 +194,10 @@ export interface FormItemState {
      */
     setValidateResult: (result: ValidateResult) => void;
     /**
+     * 获取dom
+     */
+    ref: React.MutableRefObject<HTMLElement>;
+    /**
      * 重置到初始值
      */
     rest: () => void;
@@ -211,6 +205,13 @@ export interface FormItemState {
      * 获取标签
      */
     getLabel: () => React.ReactNode;
+}
+
+export interface FormItemContextState {
+    /**
+     * 验证结果改变
+     */
+    onValidateChange: (prop: string, validateResult: ValidateResult) => void;
 }
 
 export interface FormBlockProps {
@@ -250,10 +251,10 @@ export interface FormBlockContextState {
     /**
      * 字段需要验证事件
      */
-    fieldValidate?: (prop: string, value: any, trigger?: ValidateTrigger) => Promise<any>;
+    fieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
 }
 
-export interface FormItemProps<T = any, NormalizeResult = any> extends FormItemFieldProps<T, NormalizeResult> {
+export interface FormItemProps<T = any, NormalizeResult = any> extends Partial<FormItemFieldProps<T, NormalizeResult>> {
     /**
      * 附加类名
      */
@@ -274,4 +275,8 @@ export interface FormItemProps<T = any, NormalizeResult = any> extends FormItemF
      * 内容
      */
     children?: React.ReactNode;
+}
+
+export interface FormItemFailResult extends ValidateResult {
+    prop: string;
 }

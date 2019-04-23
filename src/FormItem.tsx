@@ -1,17 +1,34 @@
 import React, { useContext, useState } from "react";
 import { FormContext } from "./Context/FormContext";
-import { FormItemProps } from "./interface";
+import { FormItemProps, FormItemFailResult } from "./interface";
 import classNames from "classnames";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import FormItemField from "./FormItemField";
+import { FormItemContext } from "./Context/FormItemContext";
 
 export function FormItem(props: FormItemProps) {
     const { prefixCls = "xy-form-item", className, style, labelPosition, children, ...rest } = props;
     const context = useContext(FormContext);
-    const [validateResult, setValidateResult] = useState<ValidateResult>({ status: true, msg: null });
+    const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
     const classString = classNames(prefixCls, className);
     const _labelPosition = labelPosition || context.labelPosition;
-    // TODO: #2 此 FormItem 下的任意一个验证失败， 则显示失败原因， 并设置失败样式
+
+    function validateChangeHandle(prop: string, validateResult: ValidateResult) {
+        const i = failValidateResult.findIndex((x) => x.prop === prop);
+        if (validateResult.status) {
+            if (i !== -1) {
+                // 清除上一次验证失败
+                setFailValidateResult(failValidateResult.splice(i, 1));
+            }
+        } else {
+            if (i !== -1) {
+                failValidateResult[i].msg = validateResult.msg;
+                setFailValidateResult(failValidateResult);
+            } else {
+                setFailValidateResult([...failValidateResult, { prop, ...validateResult }]);
+            }
+        }
+    }
 
     function renderLabel() {
         if (props.label) {
@@ -38,8 +55,8 @@ export function FormItem(props: FormItemProps) {
 
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
-                {"prop" in props ? <FormItemField {...rest}>{children}</FormItemField> : children}
-                {validateResult.status === false && <span className={`${prefixCls}-error-msg`}>{validateResult.msg}</span>}
+                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
+                {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : ","}`)}</span>}
             </div>
         );
     }

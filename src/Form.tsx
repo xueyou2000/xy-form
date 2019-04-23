@@ -10,7 +10,7 @@ import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
 /**
  * 字段分隔符
  */
-export const Separator = "/";
+export const Separator = ".";
 
 export function Form(props: FormProps) {
     const {

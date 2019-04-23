@@ -26,8 +26,8 @@ export function FormBlock({ prop = "", children }: FormBlockProps) {
         context.fieldChange(spliceProp(fieldProp), value);
     }
 
-    function fieldValidate(fieldProp: string, value: any, trigger?: ValidateTrigger) {
-        return context.fieldValidate(spliceProp(fieldProp), value, trigger);
+    function fieldValidate(fieldProp: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
+        return context.fieldValidate(spliceProp(fieldProp), value, input, trigger);
     }
 
     return <FormBlockContext.Provider value={{ model, prop: currentProp, add, remove, fieldChange, fieldValidate }}>{children}</FormBlockContext.Provider>;

@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { useMount } from "utils-hooks";
 import { FormBlockContextState, FormItemState, FormProps } from "../interface";
 import { ValidateTrigger } from "../ValidateUtils/ValidateTrigger";
 
@@ -26,17 +25,13 @@ export default function useFormBlockState(props: FormProps): [React.MutableRefOb
         }
     }
 
-    function fieldValidate(prop: string, value: any, trigger?: ValidateTrigger) {
+    function fieldValidate(prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
         if (onFieldValidate) {
-            return onFieldValidate(prop, value, trigger);
+            return onFieldValidate(prop, value, input, trigger);
         } else {
             return Promise.resolve();
         }
     }
-
-    useMount(() => {
-        // TODO: #1 遍历所有字段, 监听对应依赖
-    });
 
     return [fieldMapper, { model: defaultModel, prop: "", add, remove, fieldChange, fieldValidate }];
 }

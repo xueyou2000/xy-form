@@ -92,7 +92,7 @@ export default function() {
         console.log("-onFieldChange", prop, value);
     }
 
-    function onFieldValidate(prop: string, value: any, trigger?: ValidateTrigger) {
+    function onFieldValidate(prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
         console.log("-onFieldValidate", prop, value, trigger);
         return Promise.reject(new Error(`${formMethods.getFieldLabel(prop)}验证失败啦!`));
     }
@@ -122,6 +122,7 @@ export default function() {
                 <FormItem label="地址" prop="address">
                     <input type="text" />
                 </FormItem>
+
                 <FormBlock prop="config">
                     <FormItem label="执勤时间" prop="dutyTime">
                         <input type="number" />
