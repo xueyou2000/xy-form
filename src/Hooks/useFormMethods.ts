@@ -1,21 +1,85 @@
 import React, { useRef } from "react";
-import { FormItemState, FormProps, FormMethods } from "../interface";
+import { FormItemState, FormProps, FormMethods, FormItemValidateFunc } from "../interface";
 import { Separator } from "../Form";
+import { FieldValidate } from "../ValidateUtils/FormValidate";
+import { ValidateTrigger } from "..";
+import { ValidateConfig, FieldConfig } from "../ValidateUtils/ValidateInterface";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
 }
 
+export function GetFieldItemState(fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string) {
+    const mapper = fieldMapper.current;
+    if (mapper.has(prop)) {
+        return mapper.get(prop);
+    } else {
+        throwFieldLose(prop);
+    }
+}
+
+/**
+ * 获取指定模型对象对应全字段路径的值
+ * @description 用于外部验证, onFieldValidate时把参数prop解析到对应验证配置
+ * @param model
+ * @param fullProp
+ */
+export function getModelByFullProp<T = any>(model: any, fullProp: string): T {
+    let prevModel: any = model;
+    let lastValue: T = null;
+    const fields = fullProp.split(Separator);
+    for (let i = 0; i < fields.length; ++i) {
+        const prop = fields[i];
+        if (i !== fields.length - 1) {
+            if (prop in prevModel) {
+                prevModel = prevModel[prop];
+            } else {
+                console.warn("寻找匹配模型值失败", model, fullProp);
+            }
+        } else {
+            lastValue = prevModel[prop];
+        }
+    }
+
+    return lastValue;
+}
+
+export function fieldValidateDefault(
+    validConfig: ValidateConfig<any>,
+    onFieldValidate: FormItemValidateFunc,
+    fieldMapper: React.MutableRefObject<Map<string, FormItemState>>,
+    prop: string,
+    setValidateResult?: boolean,
+    trigger?: ValidateTrigger
+) {
+    const state = GetFieldItemState(fieldMapper, prop);
+    const configs = getModelByFullProp(validConfig || {}, prop);
+    const value = state.getValue();
+    const input = state.ref.current;
+    const label = state.getLabel();
+    if (configs && state.getCanValidate() && onFieldValidate) {
+        if (setValidateResult) {
+            return onFieldValidate(configs, label, value, input, trigger)
+                .then(() => {
+                    state.setValidateResult({ status: true, msg: null });
+                })
+                .catch((error) => {
+                    state.setValidateResult({ status: false, msg: error.message });
+                    return Promise.reject(error);
+                });
+        } else {
+            return onFieldValidate(configs, label, value, input, trigger);
+        }
+    } else {
+        return Promise.resolve();
+    }
+}
+
 export default function useFormMethods(props: FormProps, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>): FormMethods {
-    const { onFieldValidate } = props;
+    const { onFieldValidate = FieldValidate, validConfig } = props;
 
     function getFieldItemState(prop: string): FormItemState {
-        const mapper = fieldMapper.current;
-        if (mapper.has(prop)) {
-            return mapper.get(prop);
-        } else {
-            throwFieldLose(prop);
-        }
+        return GetFieldItemState(fieldMapper, prop);
     }
 
     function getFieldValue(prop: string) {
@@ -46,18 +110,8 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     }
 
     function validateField(prop: string) {
-        const state = getFieldItemState(prop);
-        if (onFieldValidate && state.getCanValidate()) {
-            return onFieldValidate(prop, state.ref.current, state.getValue())
-                .then(() => {
-                    state.setValidateResult({ status: true, msg: null });
-                })
-                .catch((error) => {
-                    state.setValidateResult({ status: false, msg: error.message });
-                });
-        } else {
-            return Promise.resolve();
-        }
+        // const state = getFieldItemState(prop);
+        return fieldValidateDefault(validConfig, onFieldValidate, fieldMapper, prop, true);
     }
 
     function validateFields() {
@@ -103,26 +157,6 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         }
     }
 
-    function getModelByFullProp<T = any>(model: any, fullProp: string): T {
-        let prevModel: any = model;
-        let lastValue: T = null;
-        const fields = fullProp.split(Separator);
-        for (let i = 0; i < fields.length; ++i) {
-            const prop = fields[i];
-            if (i !== fields.length - 1) {
-                if (prop in prevModel) {
-                    prevModel = prevModel[prop];
-                } else {
-                    console.warn("寻找匹配模型值失败", model, fullProp);
-                }
-            } else {
-                lastValue = prevModel[prop];
-            }
-        }
-
-        return lastValue;
-    }
-
     return {
         getFieldValue,
         setFieldValue,
@@ -132,7 +166,6 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         validateField,
         validateFields,
         getFieldLabel,
-        toData,
-        getModelByFullProp
+        toData
     };
 }

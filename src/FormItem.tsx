@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { FormContext } from "./Context/FormContext";
 import { FormItemProps, FormItemFailResult } from "./interface";
 import classNames from "classnames";
@@ -12,13 +12,16 @@ export function FormItem(props: FormItemProps) {
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
     const classString = classNames(prefixCls, className);
     const _labelPosition = labelPosition || context.labelPosition;
+    const labelRef = useRef();
+    const labelElement = labelRef.current as HTMLElement;
+    const label = labelElement ? labelElement.textContent || labelElement.innerText : typeof props.label === "string" ? props.label : null;
 
     function validateChangeHandle(prop: string, validateResult: ValidateResult) {
         const i = failValidateResult.findIndex((x) => x.prop === prop);
         if (validateResult.status) {
             if (i !== -1) {
                 // 清除上一次验证失败
-                setFailValidateResult(failValidateResult.splice(i, 1));
+                setFailValidateResult(failValidateResult.filter((x) => x.prop !== prop));
             }
         } else {
             if (i !== -1) {
@@ -38,7 +41,7 @@ export function FormItem(props: FormItemProps) {
             }
 
             return (
-                <label className={`${prefixCls}-label`} style={labelStyle}>
+                <label className={`${prefixCls}-label`} style={labelStyle} ref={labelRef}>
                     {props.label}
                 </label>
             );
@@ -55,7 +58,7 @@ export function FormItem(props: FormItemProps) {
 
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
-                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
+                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
                 {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : ","}`)}</span>}
             </div>
         );

@@ -1,9 +1,11 @@
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import { ValidateResult } from "./ValidateUtils/ValidateInterface";
+import { ValidateResult, ValidateConfig, FieldConfig } from "./ValidateUtils/ValidateInterface";
 
 export type FormItemLabelPosition = "right" | "left" | "top";
 
-export interface FormProps extends Partial<FormContextState> {
+export type FormItemValidateFunc = (configs: FieldConfig[], label: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
+
+export interface FormProps<T = {}> extends Partial<FormContextState> {
     /**
      * 附加类名
      */
@@ -44,7 +46,11 @@ export interface FormProps extends Partial<FormContextState> {
      * 默认对象
      * @description 用于提供默认值
      */
-    defaultModel?: any;
+    defaultModel?: T;
+    /**
+     * 验证配置
+     */
+    validConfig?: ValidateConfig<T>;
     /**
      * 获取表单方法
      */
@@ -56,15 +62,20 @@ export interface FormProps extends Partial<FormContextState> {
     /**
      * 字段需要验证事件
      */
-    onFieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
+    onFieldValidate?: FormItemValidateFunc;
     /**
      * 开始点击提交按钮
      */
     onSubmitBefore?: (data: any) => void;
     /**
+     * 表单需要验证事件
+     * @description 允许自定义表单验证
+     */
+    onFormValidate?: (fieldMapper: React.MutableRefObject<Map<string, FormItemState>>) => Promise<any>;
+    /**
      * 表单验证失败事件
      */
-    onValidateFail?: (error: Error) => void;
+    onValidateFail?: (data: any, error: Error) => void;
     /**
      * 表单提交事件
      * @description 当验证全部通过后才会调用此事件
@@ -109,11 +120,6 @@ export interface FormMethods {
      * 获取数据
      */
     toData: () => any;
-    /**
-     * 获取指定模型对象对应全字段路径的值
-     * @description 用于外部验证, onFieldValidate时把参数prop解析到对应验证配置
-     */
-    getModelByFullProp: <T = any>(model: any, fullProp: string) => T;
 }
 
 export interface FormContextState {
@@ -148,7 +154,7 @@ export interface FormItemFieldProps<T = any, NormalizeResult = any> {
      * 中文标签名
      * @description 用于验证提示
      */
-    label?: React.ReactNode;
+    label?: string;
     /**
      * 代理输入组件
      */
@@ -208,7 +214,7 @@ export interface FormItemState {
     /**
      * 获取标签
      */
-    getLabel: () => React.ReactNode;
+    getLabel: () => string;
 }
 
 export interface FormItemContextState {
@@ -216,6 +222,10 @@ export interface FormItemContextState {
      * 验证结果改变
      */
     onValidateChange: (prop: string, validateResult: ValidateResult) => void;
+    /**
+     * 标签中文名称
+     */
+    label?: string;
 }
 
 export interface FormBlockProps {

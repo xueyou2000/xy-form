@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4 (Tue Apr 23 2019)
+
+-   内置表单验证
+
 ## 0.0.3 (Tue Apr 23 2019)
 
 -   增加 FormItem 管理内部错误列表, 修复 BUG

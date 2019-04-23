@@ -2,6 +2,8 @@ import React from "react";
 import { Form, FormBlock, FormItem, FormItemField } from "../src";
 import { ValidateTrigger } from "../src/ValidateUtils/ValidateTrigger";
 import { FormMethods } from "../src/interface";
+import { FieldConfig, ValidateConfig } from "../src/ValidateUtils/ValidateInterface";
+import { ValidateError } from "../src/ValidateUtils/FormValidate";
 
 /**
  * 民警配置
@@ -49,15 +51,6 @@ interface PoliceAddDto {
     config: PoliceConfig;
 }
 
-export interface Rule {
-    disabled?: boolean;
-    validName?: string;
-    params?: any;
-    function?: Function;
-}
-type ValidValue = string | number | null | boolean;
-type RuleConfig<T> = { [P in keyof T]?: (T[P]) extends ValidValue ? Rule[] : RuleConfig<T[P]> };
-
 export default function() {
     let formMethods: FormMethods;
     const policeAddDto: PoliceAddDto = {
@@ -74,27 +67,22 @@ export default function() {
         }
     };
 
-    const rule: RuleConfig<PoliceAddDto> = {
-        name: [{ validName: "required" }],
-        phone: [{ validName: "required" }],
-        address: [{ validName: "required" }],
-        age: [{ validName: "required" }],
+    const rule: ValidateConfig<PoliceAddDto> = {
+        name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
+        phone: [{ name: "Required" }],
+        address: [{ name: "Required" }],
+        age: [{ name: "Required" }],
         config: {
-            dutyTime: [{ validName: "required" }],
-            halt: [{ validName: "required" }],
+            dutyTime: [{ name: "Required" }],
+            halt: [{ name: "Required" }],
             nest2: {
-                t2_1: [{ validName: "required" }]
+                t2_1: [{ name: "Required" }]
             }
         }
     };
 
     function onFieldChange(prop: string, value: any) {
         console.log("-onFieldChange", prop, value);
-    }
-
-    function onFieldValidate(prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
-        console.log("-onFieldValidate", prop, value, trigger);
-        return Promise.reject(new Error(`${formMethods.getFieldLabel(prop)}验证失败啦!`));
     }
 
     function onSubmitBefore(data: PoliceAddDto) {
@@ -105,11 +93,15 @@ export default function() {
         console.log("-onSubmit", data);
     }
 
+    function onValidateFail(data: PoliceAddDto, error: ValidateError) {
+        console.log("表单验证失败", data, error.message, error.input, error.name, error.validName, error.trigger);
+    }
+
     return (
         <div>
             <h1>简单演示</h1>
 
-            <Form defaultModel={policeAddDto} onFieldChange={onFieldChange} onFieldValidate={onFieldValidate} onSubmitBefore={onSubmitBefore} onSubmit={onSubmit} getFormMethods={(methods) => (formMethods = methods)}>
+            <Form defaultModel={policeAddDto} validConfig={rule} onValidateFail={onValidateFail} onFieldChange={onFieldChange} onSubmitBefore={onSubmitBefore} onSubmit={onSubmit} getFormMethods={(methods) => (formMethods = methods)}>
                 <FormItem label="民警名称" prop="name">
                     <input type="text" />
                 </FormItem>
@@ -141,8 +133,6 @@ export default function() {
             <button onClick={() => formMethods.setFieldValue("name", "123")}>设置字段值</button>
             <button onClick={() => formMethods.resetFields()}>重置</button>
             <button onClick={() => console.log(formMethods.getFieldLabel("name"))}>获取标签名</button>
-            <button onClick={() => console.log(formMethods.getModelByFullProp(rule, "name"))}>获取配置</button>
-            <button onClick={() => console.log(formMethods.getModelByFullProp(rule, "config/dutyTime"))}>获取配置(嵌套)</button>
         </div>
     );
 }

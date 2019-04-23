@@ -3,8 +3,11 @@ import FormBlock from "./FormBlock";
 import FormItem from "./FormItem";
 import FormItemField from "./FormItemField";
 
+import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
+import { FormValidateLocal } from "./ValidateUtils/FormValidateLocal";
+
 import { FormBlockContext } from "./Context/FormBlockContext";
 import { FormContext } from "./Context/FormContext";
 import { FormItemContext } from "./Context/FormItemContext";
 
-export { Form, Separator, FormBlock, FormItem, FormItemField, FormBlockContext, FormContext, FormItemContext };
+export { Form, Separator, FormBlock, FormItem, FormItemField, FormBlockContext, FormContext, FormItemContext, ValidateTrigger, FormValidateLocal };

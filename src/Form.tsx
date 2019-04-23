@@ -22,7 +22,9 @@ export function Form(props: FormProps) {
         onFieldChange,
         onFieldValidate,
         onSubmitBefore,
+        onFormValidate,
         onValidateFail,
+        validConfig,
         onSubmit,
         disabled = false,
         trigger = ValidateTrigger.change,
@@ -47,11 +49,11 @@ export function Form(props: FormProps) {
             return;
         }
         const data = formMethods.toData();
+        const validateFunc = onFormValidate || formMethods.validateFields;
         if (onSubmitBefore) {
             onSubmitBefore(data);
         }
-        formMethods
-            .validateFields()
+        validateFunc(fieldMapper)
             .then(() => {
                 if (onSubmit) {
                     onSubmit(data);
@@ -59,7 +61,7 @@ export function Form(props: FormProps) {
             })
             .catch((error) => {
                 if (onValidateFail) {
-                    onValidateFail(error);
+                    onValidateFail(data, error);
                 }
             });
 

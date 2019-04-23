@@ -10873,6 +10873,11 @@ uuid@^3.1.0, uuid@^3.3.2:
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha1-G0r0lV6zB3xQHCOHL8ZROBFYcTE=
 
+validate-methods@^1.0.51, validate-methods@^1.0.53:
+  version "1.0.53"
+  resolved "http://registry.npm.taobao.org/validate-methods/download/validate-methods-1.0.53.tgz#4c8a43ca90128835c52abad6b56574d9ac6bd76a"
+  integrity sha1-TIpDypASiDXFKrrWtWV02axr12o=
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/validate-npm-package-license/download/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -10887,6 +10892,19 @@ validate-npm-package-name@^3.0.0:
   integrity sha1-X6kS2B630MdK/BQN5zF/DKffQ34=
   dependencies:
     builtins "^1.0.3"
+
+validate-provider@^1.0.31, validate-provider@^1.0.33:
+  version "1.0.33"
+  resolved "http://registry.npm.taobao.org/validate-provider/download/validate-provider-1.0.33.tgz#a30a52b1051cf88846d8522cbdd10055e020df46"
+  integrity sha1-owpSsQUc+IhG2FIsvdEAVeAg30Y=
+
+validate-runner@^1.0.22:
+  version "1.0.22"
+  resolved "http://registry.npm.taobao.org/validate-runner/download/validate-runner-1.0.22.tgz#b172e1842584238a5dc5535c95cd5be5c009e615"
+  integrity sha1-sXLhhCWEI4pdxVNclc1b5cAJ5hU=
+  dependencies:
+    validate-methods "^1.0.51"
+    validate-provider "^1.0.31"
 
 value-equal@^0.4.0:
   version "0.4.0"

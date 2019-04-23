@@ -10,7 +10,7 @@ import { FormItemContext } from "./Context/FormItemContext";
 import { Separator } from "./Form";
 
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const { prop, children, defaultValue, normalize, label, disabledValidate, onValidate } = props;
+    const { prop, children, defaultValue, normalize, disabledValidate, onValidate } = props;
     const blockContext = useContext(FormBlockContext);
     const formContext = useContext(FormContext);
     const formItemContext = useContext(FormItemContext);
@@ -18,12 +18,14 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     const inputRef = useRef<any>();
     const initialValue = useRef(blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue);
     const disabled = formContext.disabled;
+    const label = formItemContext.label || props.label || "";
     const trigger = props.trigger || formContext.trigger;
     const child = React.Children.only(children) as any;
     const [value, setValue] = useState<T>(initialValue.current);
     const [validateResult, setValidateResult] = useState<ValidateResult>({ status: true, msg: null });
     // Tips: 用于validate时这个时候onChange导致的setValue还未更新完毕
     const lastValue = useRef(value);
+    const lastValidateResult = useRef(validateResult);
 
     const itemState: FormItemState = {
         rest,
@@ -45,7 +47,8 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     });
 
     function changeValidateResult(result: ValidateResult) {
-        if (validateResult.status !== result.status) {
+        if (lastValidateResult.current.status !== result.status) {
+            lastValidateResult.current = result;
             if (onValidate) {
                 onValidate(value, result, inputRef.current, normalize);
             }
