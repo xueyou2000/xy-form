@@ -43,6 +43,9 @@ export function Form(props: FormProps) {
     }
 
     function submitHandle(event: React.FormEvent<HTMLFormElement>) {
+        if (disabled) {
+            return;
+        }
         const data = formMethods.toData();
         if (onSubmitBefore) {
             onSubmitBefore(data);
@@ -68,6 +71,9 @@ export function Form(props: FormProps) {
     }
 
     function restHandle(event: React.FormEvent<HTMLFormElement>) {
+        if (disabled) {
+            return;
+        }
         formMethods.resetFields();
     }
 

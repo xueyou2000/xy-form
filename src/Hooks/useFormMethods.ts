@@ -47,7 +47,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
 
     function validateField(prop: string) {
         const state = getFieldItemState(prop);
-        if (onFieldValidate) {
+        if (onFieldValidate && state.getCanValidate()) {
             return onFieldValidate(prop, state.ref.current, state.getValue())
                 .then(() => {
                     state.setValidateResult({ status: true, msg: null });
@@ -61,6 +61,9 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     }
 
     function validateFields() {
+        if (props.disabled) {
+            return Promise.resolve();
+        }
         const mapper = fieldMapper.current;
         const promises: Promise<any>[] = [];
         mapper.forEach((state, prop) => {

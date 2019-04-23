@@ -30,6 +30,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
         ref: inputRef,
         setValidateResult: changeValidateResult,
         setValue: changeValue,
+        getCanValidate: () => !disabled && !disabledValidate,
         getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current),
         getLabel: () => label,
         getValidateResult: () => validateResult
@@ -65,7 +66,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     }
 
     function validate(_trigger?: ValidateTrigger) {
-        if ((_trigger & trigger) !== 0) {
+        if ((_trigger & trigger) !== 0 && !disabled && !disabledValidate) {
             blockContext
                 .fieldValidate(prop, lastValue.current, inputRef.current, _trigger)
                 .then(() => {

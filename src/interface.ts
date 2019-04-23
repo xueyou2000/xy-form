@@ -194,6 +194,10 @@ export interface FormItemState {
      */
     setValidateResult: (result: ValidateResult) => void;
     /**
+     * 获取是否可以验证
+     */
+    getCanValidate: () => boolean;
+    /**
      * 获取dom
      */
     ref: React.MutableRefObject<HTMLElement>;
