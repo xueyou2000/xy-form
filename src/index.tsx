@@ -1,18 +1,6 @@
-import React from "react";
+import Form, { Separator } from "./Form";
+import FormBlock from "./FormBlock";
+import FormItem from "./FormItem";
+import FormItemField from "./FormItemField";
 
-export interface MyComponentProps {
-    /**
-     * 根节点附加类名
-     */
-    className?: string;
-    /**
-     * 内敛样式
-     */
-    style?: React.CSSProperties;
-}
-
-export function MyComponent(props: MyComponentProps) {
-    return <div>Hello</div>;
-}
-
-export default MyComponent;
+export { Form, Separator, FormBlock, FormItem, FormItemField };

@@ -1,0 +1,93 @@
+$FormPrefix: "xy-form";
+$FormItemPrefix: "xy-form-item";
+
+.#{$FormItemPrefix} {
+    position: relative;
+    margin-bottom: 22px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    & > .#{$FormItemPrefix} {
+        margin-bottom: 0;
+    }
+
+    &:before {
+        display: table;
+        content: "";
+    }
+    &:after {
+        display: table;
+        content: "";
+        clear: both;
+    }
+
+    .#{$FormItemPrefix}-error-msg {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        color: #f5222d;
+        line-height: 1.5;
+        transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+        margin-top: -2px;
+        clear: both;
+        font-family: "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+    }
+}
+
+.#{$FormItemPrefix}-label {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    color: #48576a;
+    line-height: 1;
+    padding: 12px 12px 12px 0;
+    box-sizing: border-box;
+}
+.#{$FormItemPrefix}-content {
+    line-height: 36px;
+    position: relative;
+
+    &:before {
+        display: table;
+        content: "";
+    }
+    &:after {
+        display: table;
+        content: "";
+        clear: both;
+    }
+}
+
+.#{$FormPrefix}--inline {
+    .#{$FormItemPrefix} {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: top;
+    }
+    .#{$FormItemPrefix}-content {
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+.#{$FormPrefix}--label-left {
+    .#{$FormItemPrefix}-label {
+        text-align: left;
+    }
+}
+
+.#{$FormPrefix}--label-top {
+    .#{$FormItemPrefix}-label {
+        float: none;
+        display: inline-block;
+        text-align: left;
+        padding: 0 0 10px;
+    }
+}
+
+.valid-error {
+    border-color: #ff4949;
+}

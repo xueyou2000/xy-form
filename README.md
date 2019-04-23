@@ -13,7 +13,7 @@
 [download-image]: https://img.shields.io/npm/dm/xy-form.svg?style=flat-square
 [download-url]: https://npmjs.org/package/xy-form
 
-> 基于`React Hooks` + `typescript`的基础组件
+> `基于React`的表单组件, 提供了表单样式, 数据存储
 
 ## 安装
 
@@ -33,11 +33,112 @@ yarn add xy-form
 
 ## 使用
 
-```ts
+```tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import XyForm from "xy-form";
-ReactDOM.render(<XyForm />, container);
+import { Form, Separator, FormBlock, FormItem, FormItemField } from "xy-form";
+ReactDOM.render(
+    <Form onSubmitBefore={onSubmitBefore} onSubmit={onSubmit}>
+        <FormItem label="姓名" prop="name">
+            <input type="text" />
+        </FormItem>
+        <FormItem label="手机号" prop="phone">
+            <input type="text" />
+        </FormItem>
+        <button>提交</button>
+        <input type="reset" value="重置" />
+    </Form>,
+    container
+);
+```
+
+## Form
+
+-   顶级就能控制所有输入框的 disabled 状态
+-   提供通用的默认配置, 详细看`FormContext`
+-   提供很多事件钩子， 比如字段值改变， 比如字段验证状态改变， 比如表单验证完毕等
+-   挂接原生 submit,rest 事件
+-   表单样式
+-   提供表单方法, 详细看`FormMethods`
+
+## FormBlock
+
+-   用于嵌套数据
+
+## FormItem
+
+-   提供表单段落样式
+-   显示错误信息文本
+-   指定某个字段验证状态改变后， 再次判断是否验证失败
+-   提供了`prop`则默认自带`FormItemField`组件
+
+## FormItemField
+
+-   代理包裹组件的`value`, `onChange`, `disabled`属性
+-   内部有验证是否失败状态, 和失败原因
+-   初始化时候保留当前组件初始值, initialValue, 在 form.resetFields()时候以重置输入框的值
+-   normalize, 可选规范化函数， 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串
+
+---
+
+## FormContext
+
+> 提供整体通过默认状态
+
+-   `disabled` 是否全部默认禁用
+-   `trigger` 全部默认触发事件
+-   `labelPosition` 标签对齐位置 "right" | "left" | "top"
+-   `labelWidth` 标签宽度
+-   `inline` 是否内陆模式
+
+## FormMehhods
+
+> 提供表单操作功能
+
+```ts
+export interface FormMethods {
+    /**
+     * 获取字段值
+     */
+    getFieldValue: (prop: string) => any;
+    /**
+     * 设置字段值
+     */
+    setFieldValue: (prop: string, value: any) => void;
+    /**
+     * 获取字段验证结果
+     */
+    getFieldValidateResult: (props: string) => ValidateResult;
+    /**
+     * 重置字段到初始值
+     */
+    resetField: (prop: string) => void;
+    /**
+     * 重置所有字段到初始值
+     */
+    resetFields: () => void;
+    /**
+     * 验证指定字段
+     */
+    validateField: (prop: string) => Promise<any>;
+    /**
+     * 验证所有字段
+     */
+    validateFields: () => Promise<any>;
+    /**
+     * 获取对应标签
+     */
+    getFieldLabel: (prop: string) => React.ReactNode;
+    /**
+     * 获取数据
+     */
+    toData: () => any;
+    /**
+     * 获取指定模型对象对应全字段路径的值
+     * @description 用于外部验证, onFieldValidate时把参数prop解析到对应验证配置
+     */
+    getModelByFullProp: <T = any>(model: any, fullProp: string) => T;
+}
 ```
 
 ## 开发
