@@ -7,7 +7,8 @@ export const DefaultFormContext: FormContextState = {
     trigger: ValidateTrigger.change,
     labelPosition: "left",
     labelWidth: "90px",
-    inline: false
+    inline: false,
+    formMethods: null
 };
 
 export const FormContext = React.createContext<FormContextState>(DefaultFormContext);

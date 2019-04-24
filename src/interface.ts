@@ -117,6 +117,10 @@ export interface FormMethods {
      */
     getFieldLabel: (prop: string) => React.ReactNode;
     /**
+     * 表单提交
+     */
+    submit: (uncaught?: boolean) => Promise<any>;
+    /**
      * 获取数据
      */
     toData: () => any;
@@ -143,6 +147,10 @@ export interface FormContextState {
      * 是否内联模式
      */
     inline: boolean;
+    /**
+     * 表单方法
+     */
+    formMethods: FormMethods;
 }
 
 export interface FormItemFieldProps<T = any, NormalizeResult = any> {
@@ -150,6 +158,15 @@ export interface FormItemFieldProps<T = any, NormalizeResult = any> {
      * 代理字段名
      */
     prop: string;
+    /**
+     * 代理值的key
+     * @description 默认代理value
+     */
+    valueKey?: string;
+    /**
+     * 如何从onChange转换值
+     */
+    converValue?: Function;
     /**
      * 中文标签名
      * @description 用于验证提示

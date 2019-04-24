@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import { FormItemState, FormProps, FormMethods, FormItemValidateFunc } from "../interface";
-import { Separator } from "../Form";
-import { FieldValidate } from "../ValidateUtils/FormValidate";
+import React from "react";
 import { ValidateTrigger } from "..";
-import { ValidateConfig, FieldConfig } from "../ValidateUtils/ValidateInterface";
+import { Separator } from "../Form";
+import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
+import { FieldValidate } from "../ValidateUtils/FormValidate";
+import { ValidateConfig } from "../ValidateUtils/ValidateInterface";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -44,39 +44,21 @@ export function getModelByFullProp<T = any>(model: any, fullProp: string): T {
     return lastValue;
 }
 
-export function fieldValidateDefault(
-    validConfig: ValidateConfig<any>,
-    onFieldValidate: FormItemValidateFunc,
-    fieldMapper: React.MutableRefObject<Map<string, FormItemState>>,
-    prop: string,
-    setValidateResult?: boolean,
-    trigger?: ValidateTrigger
-) {
+export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldValidate: FormItemValidateFunc, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string, trigger?: ValidateTrigger) {
     const state = GetFieldItemState(fieldMapper, prop);
     const configs = getModelByFullProp(validConfig || {}, prop);
     const value = state.getValue();
     const input = state.ref.current;
     const label = state.getLabel();
     if (configs && state.getCanValidate() && onFieldValidate) {
-        if (setValidateResult) {
-            return onFieldValidate(configs, label, value, input, trigger)
-                .then(() => {
-                    state.setValidateResult({ status: true, msg: null });
-                })
-                .catch((error) => {
-                    state.setValidateResult({ status: false, msg: error.message });
-                    return Promise.reject(error);
-                });
-        } else {
-            return onFieldValidate(configs, label, value, input, trigger);
-        }
+        return onFieldValidate(configs, label, value, input, trigger);
     } else {
         return Promise.resolve();
     }
 }
 
 export default function useFormMethods(props: FormProps, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>): FormMethods {
-    const { onFieldValidate = FieldValidate, validConfig } = props;
+    const { onFieldValidate = FieldValidate, validConfig, disabled, onFormValidate, onSubmitBefore, onSubmit, onValidateFail } = props;
 
     function getFieldItemState(prop: string): FormItemState {
         return GetFieldItemState(fieldMapper, prop);
@@ -110,8 +92,15 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     }
 
     function validateField(prop: string) {
-        // const state = getFieldItemState(prop);
-        return fieldValidateDefault(validConfig, onFieldValidate, fieldMapper, prop, true);
+        const state = getFieldItemState(prop);
+        return fieldValidateDefault(validConfig, onFieldValidate, fieldMapper, prop)
+            .then(() => {
+                state.setValidateResult({ status: true, msg: null });
+            })
+            .catch((error) => {
+                state.setValidateResult({ status: false, msg: error.message });
+                return Promise.reject(error);
+            });
     }
 
     function validateFields() {
@@ -141,6 +130,35 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         return model;
     }
 
+    function submit(uncaught?: boolean) {
+        const data = toData();
+        const validateFunc = onFormValidate || validateFields;
+        if (disabled) {
+            return Promise.reject(new Error("form disabled, can not submit"));
+        }
+
+        if (onSubmitBefore) {
+            onSubmitBefore(data);
+        }
+        return validateFunc(fieldMapper)
+            .then(() => {
+                if (onSubmit) {
+                    onSubmit(data);
+                }
+                if (!uncaught) {
+                    return data;
+                }
+            })
+            .catch((error) => {
+                if (onValidateFail) {
+                    onValidateFail(data, error);
+                }
+                if (!uncaught) {
+                    return Promise.reject(error);
+                }
+            });
+    }
+
     function spliceDate(model: any, fullProp: string, fields: string[]) {
         let prevModel: any = model;
         const value = getFieldValue(fullProp);
@@ -166,6 +184,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         validateField,
         validateFields,
         getFieldLabel,
-        toData
+        toData,
+        submit
     };
 }

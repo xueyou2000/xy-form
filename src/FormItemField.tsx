@@ -9,8 +9,16 @@ import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
 import { FormItemContext } from "./Context/FormItemContext";
 import { Separator } from "./Form";
 
+function DefaultChangeValue(value: any) {
+    // 如果onChange的参数是 event 事件
+    if (value && typeof value === "object" && "target" in value) {
+        return (value as any).target.value;
+    }
+    return value;
+}
+
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const { prop, children, defaultValue, normalize, disabledValidate, onValidate } = props;
+    const { prop, children, defaultValue, normalize, valueKey = "value", converValue = DefaultChangeValue, disabledValidate, onValidate } = props;
     const blockContext = useContext(FormBlockContext);
     const formContext = useContext(FormContext);
     const formItemContext = useContext(FormItemContext);
@@ -87,10 +95,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     }
 
     function changeHandle(value: T) {
-        let val = value;
-        if ("target" in value) {
-            val = (value as any).target.value;
-        }
+        let val = converValue(value);
         changeValue(val);
         validate(ValidateTrigger.change);
     }
@@ -106,10 +111,11 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
         ? React.cloneElement(
               child as any,
               Object.assign({}, child.props, {
-                  value,
+                  // Tips: 非原生组件没有提供初始值则使用空字符串, 自定义组件使用null, 来确保输入组件是受控的
+                  [valueKey]: value === undefined ? (typeof child.type === "string" ? "" : null) : value,
                   key: prop,
-                  name: parentProp + prop,
                   ref: inputRef,
+                  name: parentProp + prop,
                   disabled: disabled,
                   onBlur: blurHandle,
                   onChange: changeHandle,

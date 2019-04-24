@@ -133,6 +133,7 @@ export default function() {
             <button onClick={() => formMethods.setFieldValue("name", "123")}>设置字段值</button>
             <button onClick={() => formMethods.resetFields()}>重置</button>
             <button onClick={() => console.log(formMethods.getFieldLabel("name"))}>获取标签名</button>
+            <button onClick={() => formMethods.submit()}>表单提交</button>
         </div>
     );
 }

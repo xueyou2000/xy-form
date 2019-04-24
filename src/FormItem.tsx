@@ -1,10 +1,10 @@
-import React, { useContext, useState, useRef } from "react";
-import { FormContext } from "./Context/FormContext";
-import { FormItemProps, FormItemFailResult } from "./interface";
 import classNames from "classnames";
-import { ValidateResult } from "./ValidateUtils/ValidateInterface";
-import FormItemField from "./FormItemField";
+import React, { useContext, useState } from "react";
+import { FormContext } from "./Context/FormContext";
 import { FormItemContext } from "./Context/FormItemContext";
+import FormItemField from "./FormItemField";
+import { FormItemFailResult, FormItemProps } from "./interface";
+import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 
 export function FormItem(props: FormItemProps) {
     const { prefixCls = "xy-form-item", className, style, labelPosition, children, ...rest } = props;
@@ -12,9 +12,13 @@ export function FormItem(props: FormItemProps) {
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
     const classString = classNames(prefixCls, className);
     const _labelPosition = labelPosition || context.labelPosition;
-    const labelRef = useRef();
-    const labelElement = labelRef.current as HTMLElement;
-    const label = labelElement ? labelElement.textContent || labelElement.innerText : typeof props.label === "string" ? props.label : null;
+    const [label, setLabel] = useState(typeof props.label === "string" ? props.label : null);
+
+    function labelMount(labelElement: HTMLElement) {
+        if (!label) {
+            setLabel(labelElement.textContent || labelElement.innerText);
+        }
+    }
 
     function validateChangeHandle(prop: string, validateResult: ValidateResult) {
         const i = failValidateResult.findIndex((x) => x.prop === prop);
@@ -41,7 +45,7 @@ export function FormItem(props: FormItemProps) {
             }
 
             return (
-                <label className={`${prefixCls}-label`} style={labelStyle} ref={labelRef}>
+                <label className={`${prefixCls}-label`} style={labelStyle} ref={labelMount}>
                     {props.label}
                 </label>
             );
@@ -52,7 +56,7 @@ export function FormItem(props: FormItemProps) {
 
     function renderContent() {
         const contentStyle: React.CSSProperties = {};
-        if (props.label && !context.inline && _labelPosition !== "top") {
+        if ("label" in props && !context.inline && _labelPosition !== "top") {
             contentStyle.marginLeft = context.labelWidth;
         }
 

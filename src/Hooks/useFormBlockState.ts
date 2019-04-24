@@ -28,8 +28,7 @@ export default function useFormBlockState(props: FormProps): [React.MutableRefOb
     }
 
     function fieldValidate(prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
-        // const state = GetFieldItemState(fieldMapper, prop);
-        return fieldValidateDefault(validConfig, onFieldValidate, fieldMapper, prop, false, trigger);
+        return fieldValidateDefault(validConfig, onFieldValidate, fieldMapper, prop, trigger);
     }
 
     return [fieldMapper, { model: defaultModel, prop: "", add, remove, fieldChange, fieldValidate }];

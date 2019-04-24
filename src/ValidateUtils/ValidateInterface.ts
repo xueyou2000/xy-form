@@ -12,7 +12,7 @@ export interface ValidateResult {
     msg?: string;
 }
 
-export type ValidValue = string | number | null | boolean;
+export type ValidValue = string | number | null | boolean | Date | Array<any>;
 
 export interface FieldConfig extends IMethodRegister {
     /**

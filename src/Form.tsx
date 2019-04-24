@@ -45,26 +45,7 @@ export function Form(props: FormProps) {
     }
 
     function submitHandle(event: React.FormEvent<HTMLFormElement>) {
-        if (disabled) {
-            return;
-        }
-        const data = formMethods.toData();
-        const validateFunc = onFormValidate || formMethods.validateFields;
-        if (onSubmitBefore) {
-            onSubmitBefore(data);
-        }
-        validateFunc(fieldMapper)
-            .then(() => {
-                if (onSubmit) {
-                    onSubmit(data);
-                }
-            })
-            .catch((error) => {
-                if (onValidateFail) {
-                    onValidateFail(data, error);
-                }
-            });
-
+        formMethods.submit(true);
         if (!props.action) {
             event.stopPropagation();
             event.preventDefault();
@@ -80,8 +61,8 @@ export function Form(props: FormProps) {
     }
 
     return (
-        <form {...rest} className={classString} onSubmit={submitHandle} onReset={restHandle}>
-            <FormContext.Provider value={{ disabled, trigger, labelPosition, labelWidth, inline }}>
+        <form {...rest} className={classString} onSubmit={submitHandle} onReset={restHandle} autoComplete="off">
+            <FormContext.Provider value={{ disabled, trigger, labelPosition, labelWidth, inline, formMethods }}>
                 <FormBlockContext.Provider value={formBlockContextState}>{children}</FormBlockContext.Provider>
             </FormContext.Provider>
         </form>
