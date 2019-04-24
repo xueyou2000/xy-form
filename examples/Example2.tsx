@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
 import { ValidateTrigger } from "../src/ValidateUtils/ValidateTrigger";
 import { FormMethods } from "../src/interface";
@@ -28,10 +28,12 @@ import { Row, Col } from "xy-grid";
 import "xy-grid/assets/index.css";
 
 interface Model {
-    idType: string;
-    idNumber: string;
+    certInfo: {
+        idType: string;
+        idNumber: string;
+        age: number;
+    };
     name: string;
-    age: number;
     day: number;
     day2: number;
     region: string;
@@ -43,11 +45,13 @@ interface Model {
 
 export default function() {
     let formMethods: FormMethods;
-    const model: Model = {
-        idType: "军人证",
-        idNumber: "XXXXXX-00001",
+    const model = useRef<Model>({
+        certInfo: {
+            idType: "军人证",
+            idNumber: "XXXXXX-00001",
+            age: 15
+        },
         name: "活动1",
-        age: 15,
         day: 2,
         day2: 10,
         region: "区域B",
@@ -55,21 +59,26 @@ export default function() {
         type: ["B", "C"],
         resource: "B",
         desc: "默认描述..."
-    };
+    });
 
     const rule: ValidateConfig<Model> = {
-        idType: [{ name: "Required" }],
-        idNumber: [{ name: "Required" }],
-        name: [{ name: "Required" }],
+        certInfo: {
+            idType: [{ name: "Required" }],
+            idNumber: [{ name: "Required" }],
+            age: [{ name: "Required" }]
+        },
+        name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
         day: [{ name: "Required" }],
         day2: [{ name: "Required" }],
-        age: [{ name: "Required" }],
         region: [{ name: "Required" }],
         delivery: [{ name: "Required" }],
         type: [{ name: "Required" }],
         resource: [{ name: "Required" }],
         desc: [{ name: "Required" }]
     };
+
+    const [min, setMin] = useState(model.current.day);
+    const [max, setMax] = useState(model.current.day2);
 
     function onSubmit(data: any) {
         console.log("-onSubmit", data);
@@ -79,38 +88,40 @@ export default function() {
         console.log("表单验证失败", data, error.message, error.input);
     }
 
-    console.log('formMethods.getFieldValue("day")', formMethods && formMethods.getFieldValue("day"));
-    console.log('formMethods.getFieldValue("day2")', formMethods && formMethods.getFieldValue("day2"));
     return (
         <div>
             <h1>带默认值和验证</h1>
+            <button onClick={() => console.log(model.current)}>显示model</button>
+            <button onClick={() => console.log(formMethods.getFieldLabel("name"))}>获取label</button>
             <div className="form-demo">
-                <Form defaultModel={model} validConfig={rule} onSubmit={onSubmit} onValidateFail={onValidateFail} getFormMethods={(methods) => (formMethods = methods)}>
+                <Form labelWidth="100px" defaultModel={model.current} validConfig={rule} onSubmit={onSubmit} onValidateFail={onValidateFail} getFormMethods={(methods) => (formMethods = methods)}>
                     <FormItem label="证件信息">
-                        <InputGroup compact={true}>
-                            <FormItemField label="证件类型" prop="idType">
-                                <Select style={{ width: "30%" }}>
-                                    <Option value={null}>请选择</Option>
-                                    <Option>身份证</Option>
-                                    <Option>军人证</Option>
-                                </Select>
-                            </FormItemField>
-                            <FormItemField label="证件号" prop="idNumber">
-                                <Input style={{ width: "50%" }} />
-                            </FormItemField>
-                            <FormItemField label="年龄" prop="age">
-                                <InputNumber style={{ width: "20%", minWidth: "20%" }} />
-                            </FormItemField>
-                        </InputGroup>
+                        <FormBlock prop="certInfo">
+                            <InputGroup compact={true}>
+                                <FormItemField label="证件类型" prop="idType">
+                                    <Select style={{ width: "30%" }}>
+                                        <Option value={null}>请选择</Option>
+                                        <Option>身份证</Option>
+                                        <Option>军人证</Option>
+                                    </Select>
+                                </FormItemField>
+                                <FormItemField label="证件号" prop="idNumber">
+                                    <Input style={{ width: "50%" }} />
+                                </FormItemField>
+                                <FormItemField label="年龄" prop="age">
+                                    <InputNumber style={{ width: "20%", minWidth: "20%" }} />
+                                </FormItemField>
+                            </InputGroup>
+                        </FormBlock>
                     </FormItem>
-                    <FormItem label="活动名称" prop="name">
+                    <FormItem label={<span>活动名称</span>} prop="name">
                         <Input />
                     </FormItem>
                     <FormItem label="活动天数区间">
                         <Row>
                             <Col span={11}>
                                 <FormItemField label="起始活动天数" prop="day">
-                                    <InputNumber max={formMethods && formMethods.getFieldValue("day2")} />
+                                    <InputNumber max={max} onChange={setMin} />
                                 </FormItemField>
                             </Col>
                             <Col span={2} style={{ textAlign: "center" }}>
@@ -118,7 +129,7 @@ export default function() {
                             </Col>
                             <Col span={11}>
                                 <FormItemField label="结束活动天数" prop="day2">
-                                    <InputNumber min={formMethods && formMethods.getFieldValue("day")} />
+                                    <InputNumber min={min} onChange={setMax} />
                                 </FormItemField>
                             </Col>
                         </Row>

@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
+import { useMount } from "utils-hooks";
 import { FormBlockContextState, FormItemState, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
 import { ValidateTrigger } from "../ValidateUtils/ValidateTrigger";
-import { fieldValidateDefault, GetFieldItemState } from "./useFormMethods";
+import { fieldValidateDefault, setValueByFullProp } from "./useFormMethods";
 
 export default function useFormBlockState(props: FormProps): [React.MutableRefObject<Map<string, FormItemState>>, FormBlockContextState] {
     const { defaultModel, onFieldChange, validConfig, onFieldValidate = FieldValidate } = props;
@@ -18,12 +19,18 @@ export default function useFormBlockState(props: FormProps): [React.MutableRefOb
 
     function remove(prop: string) {
         const mapper = fieldMapper.current;
-        mapper.delete(prop);
+        if (mapper.has(prop)) {
+            mapper.delete(prop);
+        }
     }
 
     function fieldChange(prop: string, value: any) {
         if (onFieldChange) {
             onFieldChange(prop, value);
+        }
+        // 尝试同步到模型
+        if (defaultModel) {
+            setValueByFullProp(defaultModel, prop, value);
         }
     }
 

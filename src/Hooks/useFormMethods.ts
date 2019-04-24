@@ -24,7 +24,7 @@ export function GetFieldItemState(fieldMapper: React.MutableRefObject<Map<string
  * @param model
  * @param fullProp
  */
-export function getModelByFullProp<T = any>(model: any, fullProp: string): T {
+export function getValueByFullProp<T = any>(model: any, fullProp: string): T {
     let prevModel: any = model;
     let lastValue: T = null;
     const fields = fullProp.split(Separator);
@@ -44,14 +44,38 @@ export function getModelByFullProp<T = any>(model: any, fullProp: string): T {
     return lastValue;
 }
 
+/**
+ * 获取指定模型对象对应全字段路径的所在对象
+ * @param model
+ * @param fullProp
+ */
+export function setValueByFullProp(model: any, fullProp: string, value: any): any {
+    let prevModel: any = model;
+    const fields = fullProp.split(Separator);
+    for (let i = 0; i < fields.length; ++i) {
+        const prop = fields[i];
+        if (i !== fields.length - 1) {
+            if (prop in prevModel) {
+                prevModel = prevModel[prop];
+            } else {
+                console.warn("寻找匹配模型值失败", model, fullProp);
+            }
+        } else {
+            prevModel[prop] = value;
+        }
+    }
+
+    return prevModel;
+}
+
 export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldValidate: FormItemValidateFunc, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string, trigger?: ValidateTrigger) {
     const state = GetFieldItemState(fieldMapper, prop);
-    const configs = getModelByFullProp(validConfig || {}, prop);
+    const configs = getValueByFullProp(validConfig || {}, prop);
     const value = state.getValue();
     const input = state.ref.current;
     const label = state.getLabel();
     if (configs && state.getCanValidate() && onFieldValidate) {
-        return onFieldValidate(configs, label, value, input, trigger);
+        return onFieldValidate(value, configs, { label, input, trigger });
     } else {
         return Promise.resolve();
     }

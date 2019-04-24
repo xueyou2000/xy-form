@@ -53,7 +53,7 @@ export function Form(props: FormProps) {
         }
     }
 
-    function restHandle(event: React.FormEvent<HTMLFormElement>) {
+    function restHandle() {
         if (disabled) {
             return;
         }

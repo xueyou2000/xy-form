@@ -133,11 +133,6 @@ export interface FormMethods {
      * 获取数据
      */
     toData: () => any;
-    /**
-     * 获取指定模型对象对应全字段路径的值
-     * @description 用于外部验证, onFieldValidate时把参数prop解析到对应验证配置
-     */
-    getModelByFullProp: <T = any>(model: any, fullProp: string) => T;
 }
 ```
 

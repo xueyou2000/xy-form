@@ -3,11 +3,11 @@ import React, { useContext, useRef, useState } from "react";
 import { useMount, useUnmount } from "utils-hooks";
 import { FormBlockContext } from "./Context/FormBlockContext";
 import { FormContext } from "./Context/FormContext";
+import { FormItemContext } from "./Context/FormItemContext";
+import { Separator } from "./Form";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import { FormItemContext } from "./Context/FormItemContext";
-import { Separator } from "./Form";
 
 function DefaultChangeValue(value: any) {
     // 如果onChange的参数是 event 事件
@@ -24,9 +24,10 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     const formItemContext = useContext(FormItemContext);
     const parentProp = blockContext.prop ? blockContext.prop + Separator : "";
     const inputRef = useRef<any>();
-    const initialValue = useRef(blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue);
+    const initialValue = useRef(defaultValue || (blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue));
+
     const disabled = formContext.disabled;
-    const label = formItemContext.label || props.label || "";
+    const label = props.label || formItemContext.label || "";
     const trigger = props.trigger || formContext.trigger;
     const child = React.Children.only(children) as any;
     const [value, setValue] = useState<T>(initialValue.current);
@@ -34,20 +35,21 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     // Tips: 用于validate时这个时候onChange导致的setValue还未更新完毕
     const lastValue = useRef(value);
     const lastValidateResult = useRef(validateResult);
-
-    const itemState: FormItemState = {
+    const itemState = useRef<FormItemState>({
         rest,
         ref: inputRef,
-        setValidateResult: changeValidateResult,
         setValue: changeValue,
-        getCanValidate: () => !disabled && !disabledValidate,
-        getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current),
+        setValidateResult: changeValidateResult,
         getLabel: () => label,
-        getValidateResult: () => validateResult
-    };
+        getValidateResult: () => validateResult,
+        getCanValidate: () => !disabled && !disabledValidate,
+        getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current)
+    });
+    // Tips: 由于外部访问时方法都是旧的, 所以需要重新设置
+    itemState.current.getLabel = () => label;
 
     useMount(() => {
-        blockContext.add(prop, itemState);
+        blockContext.add(prop, itemState.current);
     });
 
     useUnmount(() => {
@@ -91,7 +93,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
 
     function rest() {
         changeValue(initialValue.current);
-        setValidateResult({ status: true, msg: "" });
+        changeValidateResult({ status: true, msg: "" });
     }
 
     function changeHandle(value: T) {

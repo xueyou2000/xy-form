@@ -3,7 +3,13 @@ import { ValidateResult, ValidateConfig, FieldConfig } from "./ValidateUtils/Val
 
 export type FormItemLabelPosition = "right" | "left" | "top";
 
-export type FormItemValidateFunc = (configs: FieldConfig[], label: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
+export interface ValidateParams {
+    label: string;
+    input: HTMLElement;
+    trigger?: ValidateTrigger;
+}
+
+export type FormItemValidateFunc = (value: any, configs: FieldConfig[], params: ValidateParams) => Promise<any>;
 
 export interface FormProps<T = {}> extends Partial<FormContextState> {
     /**
@@ -285,7 +291,11 @@ export interface FormBlockContextState {
     fieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
 }
 
-export interface FormItemProps<T = any, NormalizeResult = any> extends Partial<FormItemFieldProps<T, NormalizeResult>> {
+export interface FormItemProps<T = any, NormalizeResult = any> extends Pick<Partial<FormItemFieldProps<T, NormalizeResult>>, Exclude<keyof Partial<FormItemFieldProps<T, NormalizeResult>>, "label">> {
+    /**
+     * 标签名称
+     */
+    label?: React.ReactNode;
     /**
      * 附加类名
      */

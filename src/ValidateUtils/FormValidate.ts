@@ -4,6 +4,7 @@ import { ValidateRunnerAll, ValidateRunnerElement } from "validate-runner";
 import { FormValidateLocal } from "./FormValidateLocal";
 import { FieldConfig } from "./ValidateInterface";
 import { ValidateTrigger } from "./ValidateTrigger";
+import { ValidateParams } from "../interface";
 
 export class ValidateError extends ValidateMethodError {
     /**
@@ -39,9 +40,11 @@ export class ValidateError extends ValidateMethodError {
  * @param input 输入框dom
  * @param trigger   触发事件
  */
-export function FieldValidate(configs: FieldConfig[], label: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) {
+export function FieldValidate(value: any, configs: FieldConfig[], params: ValidateParams) {
     const provider = new ValidateProvider();
     const runner = new ValidateRunnerAll(provider);
+    const { label, input, trigger } = params;
+
     configs.forEach((config) => {
         if (!config.trigger || !trigger || (config.trigger && trigger && (trigger & config.trigger) !== 0)) {
             if (config.method || config.name in methods) {

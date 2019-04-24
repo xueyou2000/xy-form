@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { FormContext } from "./Context/FormContext";
 import { FormItemContext } from "./Context/FormItemContext";
 import FormItemField from "./FormItemField";
@@ -7,32 +7,37 @@ import { FormItemFailResult, FormItemProps } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 
 export function FormItem(props: FormItemProps) {
-    const { prefixCls = "xy-form-item", className, style, labelPosition, children, ...rest } = props;
+    const { prefixCls = "xy-form-item", className, style, labelPosition, label, children, ...rest } = props;
     const context = useContext(FormContext);
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
+    // Tips: 通过ref来确保failValidateResult是最新的值, validateChangeHandle函数中failValidateResult总是第一次初始化的值!
+    const lastFailValidateRef = useRef<FormItemFailResult[]>(failValidateResult);
     const classString = classNames(prefixCls, className);
     const _labelPosition = labelPosition || context.labelPosition;
-    const [label, setLabel] = useState(typeof props.label === "string" ? props.label : null);
+    const [labelStr, setLabel] = useState(typeof props.label === "string" ? props.label : null);
 
     function labelMount(labelElement: HTMLElement) {
-        if (!label) {
+        if (!labelStr && labelElement) {
             setLabel(labelElement.textContent || labelElement.innerText);
         }
     }
 
     function validateChangeHandle(prop: string, validateResult: ValidateResult) {
-        const i = failValidateResult.findIndex((x) => x.prop === prop);
+        const lastFailValida = lastFailValidateRef.current;
+        const i = lastFailValida.findIndex((x) => x.prop === prop);
         if (validateResult.status) {
             if (i !== -1) {
                 // 清除上一次验证失败
-                setFailValidateResult(failValidateResult.filter((x) => x.prop !== prop));
+                lastFailValidateRef.current = lastFailValida.filter((x) => x.prop !== prop);
+                setFailValidateResult(lastFailValidateRef.current);
             }
         } else {
             if (i !== -1) {
-                failValidateResult[i].msg = validateResult.msg;
-                setFailValidateResult(failValidateResult);
+                lastFailValida[i].msg = validateResult.msg;
+                setFailValidateResult(lastFailValida);
             } else {
-                setFailValidateResult([...failValidateResult, { prop, ...validateResult }]);
+                lastFailValidateRef.current = [...lastFailValida, { prop, ...validateResult }];
+                setFailValidateResult(lastFailValidateRef.current);
             }
         }
     }
@@ -62,7 +67,7 @@ export function FormItem(props: FormItemProps) {
 
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
-                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
+                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
                 {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : ","}`)}</span>}
             </div>
         );

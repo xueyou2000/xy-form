@@ -33,7 +33,7 @@ export default function() {
         <div>
             <h1>没有默认值和验证</h1>
             <div className="form-demo" style={{ width: "500px" }}>
-                <Form onSubmit={onSubmit}>
+                <Form labelWidth="100px" onSubmit={onSubmit}>
                     <FormItem label="证件信息">
                         <InputGroup compact={true}>
                             <FormItemField label="证件类型" prop="idType">

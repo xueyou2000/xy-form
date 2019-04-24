@@ -10905,10 +10905,15 @@ utils-hooks@0.0.60, utils-hooks@^0.0.60:
   resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.60.tgz#37fe4934cac783d16eba308aebb83ae64a9be755"
   integrity sha1-N/5JNMrHg9FuujCK67g65kqb51U=
 
-utils-hooks@0.0.63, utils-hooks@^0.0.63:
+utils-hooks@0.0.63:
   version "0.0.63"
-  resolved "http://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.63.tgz#067c90e9f9278291e841d1a0a85b9e0733275fe3"
+  resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.63.tgz#067c90e9f9278291e841d1a0a85b9e0733275fe3"
   integrity sha1-BnyQ6fkngpHoQdGgqFueBzMnX+M=
+
+utils-hooks@0.0.65:
+  version "0.0.65"
+  resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.65.tgz#abb9e24413ebee7ef3e563b1967e890ba4e077dc"
+  integrity sha1-q7niRBPr7n7z5WOxln6JC6Tgd9w=
 
 utils-hooks@^0.0.51:
   version "0.0.51"
@@ -11380,10 +11385,10 @@ xy-grid@^0.0.2:
     react-dom "^16.8.2"
     utils-hooks "^0.0.51"
 
-xy-input-number@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.npm.taobao.org/xy-input-number/download/xy-input-number-0.0.5.tgz#8720cd7aad854399d76d5d02fecb3e1995ca837b"
-  integrity sha1-hyDNeq2FQ5nXbV0C/ss+GZXKg3s=
+xy-input-number@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.npm.taobao.org/xy-input-number/download/xy-input-number-0.0.6.tgz#fcb5efb6d38a3568ebd1ce6f0a851bc220223143"
+  integrity sha1-/LXvttOKNWjr0c5vCoUbwiAiMUM=
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
@@ -11393,10 +11398,10 @@ xy-input-number@0.0.5:
     react-dom "^16.8.2"
     utils-hooks "^0.0.60"
 
-xy-input@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npm.taobao.org/xy-input/download/xy-input-0.0.6.tgz#a47ce7c3666bfcbb64ef3529e4a08d963a37c33d"
-  integrity sha1-pHznw2Zr/Ltk7zUp5KCNljo3wz0=
+xy-input@0.0.61:
+  version "0.0.61"
+  resolved "https://registry.npm.taobao.org/xy-input/download/xy-input-0.0.61.tgz#1ee9b7b485cf468531f11a75fd49b23cf8b3072f"
+  integrity sha1-Hum3tIXPRoUx8Rp1/UmyPPizBy8=
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
