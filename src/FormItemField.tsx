@@ -49,6 +49,9 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     itemState.current.getLabel = () => label;
 
     useMount(() => {
+        if (!prop) {
+            throw new Error("Must assign prop");
+        }
         blockContext.add(prop, itemState.current);
     });
 

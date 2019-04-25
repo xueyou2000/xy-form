@@ -101,7 +101,11 @@ export interface FormMethods {
     /**
      * 获取字段验证结果
      */
-    getFieldValidateResult: (props: string) => ValidateResult;
+    getFieldValidateResult: (prop: string) => ValidateResult;
+    /**
+     * 设置字段验证结果
+     */
+    setFieldValidateResult: (prop: string, result: ValidateResult) => void;
     /**
      * 重置字段到初始值
      */

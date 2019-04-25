@@ -3,7 +3,7 @@ import { ValidateTrigger } from "..";
 import { Separator } from "../Form";
 import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
-import { ValidateConfig } from "../ValidateUtils/ValidateInterface";
+import { ValidateConfig, ValidateResult } from "../ValidateUtils/ValidateInterface";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -74,7 +74,8 @@ export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldVa
     const value = state.getValue();
     const input = state.ref.current;
     const label = state.getLabel();
-    if (configs && state.getCanValidate() && onFieldValidate) {
+
+    if (state.getCanValidate() && onFieldValidate) {
         return onFieldValidate(value, configs, { label, input, trigger });
     } else {
         return Promise.resolve();
@@ -101,6 +102,11 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     function getFieldValidateResult(prop: string) {
         const state = getFieldItemState(prop);
         return state.getValidateResult();
+    }
+
+    function setFieldValidateResult(prop: string, result: ValidateResult) {
+        const state = getFieldItemState(prop);
+        state.setValidateResult(result);
     }
 
     function resetField(prop: string) {
@@ -208,6 +214,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         validateField,
         validateFields,
         getFieldLabel,
+        setFieldValidateResult,
         toData,
         submit
     };

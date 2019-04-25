@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.5",
+    "version": "0.0.7",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
@@ -74,7 +74,7 @@
     },
     "jest": {
         "transformIgnorePatterns": [
-            "<rootDir>/node_modules/(?!(utils-hooks))"
+            "<rootDir>/node_modules/(?!(utils-hooks|validate-methods|validate-provider|validate-runner))"
         ]
     }
 }

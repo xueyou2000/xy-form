@@ -40,7 +40,7 @@ export class ValidateError extends ValidateMethodError {
  * @param input 输入框dom
  * @param trigger   触发事件
  */
-export function FieldValidate(value: any, configs: FieldConfig[], params: ValidateParams) {
+export function FieldValidate(value: any, configs: FieldConfig[] = [], params: ValidateParams) {
     const provider = new ValidateProvider();
     const runner = new ValidateRunnerAll(provider);
     const { label, input, trigger } = params;
