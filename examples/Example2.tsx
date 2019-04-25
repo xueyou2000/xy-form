@@ -84,7 +84,7 @@ export default function() {
         console.log("-onSubmit", data);
     }
 
-    function onValidateFail(data: Model, error: ValidateError) {
+    function onValidateFail(error: ValidateError, data: Model) {
         console.log("表单验证失败", data, error.message, error.input);
     }
 

@@ -59,10 +59,10 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     function changeValidateResult(result: ValidateResult) {
         if (lastValidateResult.current.status !== result.status) {
             lastValidateResult.current = result;
+            setValidateResult(result);
             if (onValidate) {
                 onValidate(value, result, inputRef.current, normalize);
             }
-            setValidateResult(result);
             if (formItemContext && formItemContext.onValidateChange) {
                 formItemContext.onValidateChange(prop, result);
             }
@@ -97,8 +97,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     }
 
     function changeHandle(value: T) {
-        let val = converValue(value);
-        changeValue(val);
+        changeValue(converValue(value));
         validate(ValidateTrigger.change);
     }
 

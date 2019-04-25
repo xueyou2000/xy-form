@@ -81,7 +81,7 @@ export interface FormProps<T = {}> extends Partial<FormContextState> {
     /**
      * 表单验证失败事件
      */
-    onValidateFail?: (data: any, error: Error) => void;
+    onValidateFail?: (error: Error, data: any) => void;
     /**
      * 表单提交事件
      * @description 当验证全部通过后才会调用此事件

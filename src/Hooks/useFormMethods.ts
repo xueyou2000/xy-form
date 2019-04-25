@@ -175,7 +175,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
             })
             .catch((error) => {
                 if (onValidateFail) {
-                    onValidateFail(data, error);
+                    onValidateFail(error, data);
                 }
                 if (!uncaught) {
                     return Promise.reject(error);

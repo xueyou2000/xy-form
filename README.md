@@ -130,6 +130,10 @@ export interface FormMethods {
      */
     getFieldLabel: (prop: string) => React.ReactNode;
     /**
+     * 表单提交
+     */
+    submit: (uncaught?: boolean) => Promise<any>;
+    /**
      * 获取数据
      */
     toData: () => any;

@@ -68,7 +68,7 @@ export function FormItem(props: FormItemProps) {
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
                 <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
-                {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : ","}`)}</span>}
+                {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : " , "}`)}</span>}
             </div>
         );
     }

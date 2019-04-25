@@ -54,12 +54,12 @@ interface PoliceAddDto {
 export default function() {
     let formMethods: FormMethods;
     const policeAddDto: PoliceAddDto = {
-        name: "",
-        phone: "",
-        age: null,
+        name: undefined,
+        phone: undefined,
+        age: undefined,
         address: "默认地址",
         config: {
-            dutyTime: null,
+            dutyTime: undefined,
             halt: false,
             nest2: {
                 t2_1: "12"
@@ -93,8 +93,8 @@ export default function() {
         console.log("-onSubmit", data);
     }
 
-    function onValidateFail(data: PoliceAddDto, error: ValidateError) {
-        console.log("表单验证失败", data, error.message, error.input, error.name, error.validName, error.trigger);
+    function onValidateFail(error: ValidateError, data: PoliceAddDto) {
+        console.log("表单验证失败", error.message, error.input);
     }
 
     return (
