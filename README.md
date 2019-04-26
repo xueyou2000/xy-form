@@ -25,10 +25,10 @@
 
 ```sh
 # npm
-npm install --save xy-form
+npm install --save xy-form utils-hooks validate-methods validate-provider validate-runner classnames
 
 # yarn
-yarn add xy-form
+yarn add xy-form utils-hooks validate-methods validate-provider validate-runner classnames
 ```
 
 ## 使用

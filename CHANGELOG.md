@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.8 (Fri Apr 26 2019)
+
+-   更新依赖
+
 ## 0.0.7 (Thu Apr 25 2019)
 
 -   改变`onFieldValidate`触发逻辑, 当验证配置未定也也会触发`onFieldValidate`事件, 所以需要自定判断
