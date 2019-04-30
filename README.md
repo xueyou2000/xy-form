@@ -1,37 +1,25 @@
-# xy-form
-
----
-
-[![NPM version][npm-image]][npm-url]
-[![node version][node-image]][node-url]
-[![npm download][download-image]][download-url]
-
-[npm-image]: http://img.shields.io/npm/v/xy-form.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/xy-form
-[node-image]: https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
-[download-image]: https://img.shields.io/npm/dm/xy-form.svg?style=flat-square
-[download-url]: https://npmjs.org/package/xy-form
-
-> `基于React`的表单组件, 提供了表单样式, 数据存储
-
-## 安装
-
-[![xy-form](https://nodei.co/npm/xy-form.png)](https://npmjs.org/package/xy-form)
-
 | ![IE](https://github.com/alrra/browser-logos/blob/master/src/edge/edge_48x48.png?raw=true) | ![Chrome](https://github.com/alrra/browser-logos/blob/master/src/chrome/chrome_48x48.png?raw=true) | ![Firefox](https://github.com/alrra/browser-logos/blob/master/src/firefox/firefox_48x48.png?raw=true) | ![Opera](https://github.com/alrra/browser-logos/blob/master/src/opera/opera_48x48.png?raw=true) | ![Safari](https://github.com/alrra/browser-logos/blob/master/src/safari/safari_48x48.png?raw=true) |
 | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | IE 10+ ✔                                                                                   | Chrome 31.0+ ✔                                                                                     | Firefox 31.0+ ✔                                                                                       | Opera 30.0+ ✔                                                                                   | Safari 7.0+ ✔                                                                                      |
 
-```sh
-# npm
-npm install --save xy-form utils-hooks validate-methods validate-provider validate-runner classnames
+![NPM version](http://img.shields.io/npm/v/xy-form.svg?style=flat-square)
+![node version](https://img.shields.io/badge/node.js-%3E=_0.10-green.svg?style=flat-square)
+![npm download](https://img.shields.io/npm/dm/xy-form.svg?style=flat-square)
 
+[![xy-form](https://nodei.co/npm/xy-form.png)](https://npmjs.org/package/xy-form)
+
+# xy-form
+
+表单组件, 提供了表单样式, 数据存储
+
+## 安装
+
+```bash
 # yarn
 yarn add xy-form utils-hooks validate-methods validate-provider validate-runner classnames
 ```
 
-## 使用
+## 使用例子
 
 ```tsx
 import React from "react";
@@ -51,6 +39,69 @@ ReactDOM.render(
     container
 );
 ```
+
+## API
+
+### Form
+
+| 属性            | 说明                     | 类型                                                                              | 默认值                 |
+| --------------- | ------------------------ | --------------------------------------------------------------------------------- | ---------------------- |
+| disabled        | 是否禁用表单             | boolean                                                                           | false                  |
+| trigger         | 默认触发事件             | ValidateTrigger                                                                   | ValidateTrigger.change |
+| labelPosition   | 标签对齐位置             | "right"/"left"/"top"                                                              | "left"                 |
+| labelWidth      | 标签宽度                 | string                                                                            | "85px"                 |
+| inline          | 是否内联模式             | boolean                                                                           | false                  |
+| action          | 与原生表单一样           | string                                                                            | 无                     |
+| enctype         | 与原生表单一样           | string                                                                            | 无                     |
+| method          | 与原生表单一样           | string                                                                            | 无                     |
+| name            | 与原生表单一样           | string                                                                            | 无                     |
+| target          | 与原生表单一样           | string                                                                            | 无                     |
+| defaultModel    | 默认对象, 用于提供默认值 | any                                                                               | 无                     |
+| validConfig     | 验证配置                 | ValidateConfig<any>                                                               | 无                     |
+| getFormMethods  | 获取表单方法             | (methods: FormMethods) => void                                                    | 无                     |
+| onFieldChange   | 字段值改变事件           | (prop: string, value: any) => void                                                | 无                     |
+| onFieldValidate | 字段需要验证事件         | (value: any, configs: FieldConfig[], params: ValidateParams) => Promise<any>      | 无                     |
+| onSubmitBefore  | 开始点击提交按钮         | (data: any) => void                                                               | 无                     |
+| onFormValidate  | 表单需要验证事件         | (fieldMapper: React.MutableRefObject<Map<string, FormItemState>>) => Promise<any> | 无                     |
+| onValidateFail  | 表单验证失败事件         | (error: Error, data: any) => void                                                 | 无                     |
+| onSubmit        | 表单提交事件             | (data: any) => void                                                               | 无                     |
+
+### FormBlock
+
+| 属性 | 说明       | 类型   | 默认值 |
+| ---- | ---------- | ------ | ------ |
+| prop | 字段域名称 | string | 无     |
+
+### FormItemField
+
+| 属性             | 说明                                                                | 类型                                                                                                              | 默认值  |
+| ---------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------- |
+| prop             | 代理字段名                                                          | string                                                                                                            | 无      |
+| valueKey         | 代理值的 key                                                        | string                                                                                                            | "value" |
+| converValue      | 如何从 onChange 转换值                                              | (val: any) => any                                                                                                 | 无      |
+| label            | 中文标签名                                                          | string                                                                                                            | 无      |
+| children         | 代理输入组件                                                        | React.ReactNode                                                                                                   | 无      |
+| trigger          | 默认触发事件                                                        | ValidateTrigger                                                                                                   | 无      |
+| defaultValue     | 默认值                                                              | any                                                                                                               | 无      |
+| normalize        | 规范化函数, 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串 | (value: T) => NormalizeResult                                                                                     | 无      |
+| disabledValidate | 是否禁用验证                                                        | boolean                                                                                                           | 无      |
+| onValidate       | 执行验证事件                                                        | (value: T, validateResult: ValidateResult, input: HTMLElement, normalize?: (value: T) => NormalizeResult) => void | 无      |
+
+### FormItem
+
+| 属性             | 说明                                                                | 类型                                                                                                              | 默认值  |
+| ---------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------- |
+| labelPosition    | 标签对齐位置                                                        | "right"/"left"/"top"                                                                                              | "left"  |
+| prop             | 代理字段名                                                          | string                                                                                                            | 无      |
+| valueKey         | 代理值的 key                                                        | string                                                                                                            | "value" |
+| converValue      | 如何从 onChange 转换值                                              | (val: any) => any                                                                                                 | 无      |
+| label            | 中文标签名                                                          | React.ReactNode                                                                                                   | 无      |
+| children         | 代理输入组件                                                        | React.ReactNode                                                                                                   | 无      |
+| trigger          | 默认触发事件                                                        | ValidateTrigger                                                                                                   | 无      |
+| defaultValue     | 默认值                                                              | any                                                                                                               | 无      |
+| normalize        | 规范化函数, 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串 | (value: T) => NormalizeResult                                                                                     | 无      |
+| disabledValidate | 是否禁用验证                                                        | boolean                                                                                                           | 无      |
+| onValidate       | 执行验证事件                                                        | (value: T, validateResult: ValidateResult, input: HTMLElement, normalize?: (value: T) => NormalizeResult) => void | 无      |
 
 ## Form
 

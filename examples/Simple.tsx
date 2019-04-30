@@ -1,139 +1,86 @@
 import React from "react";
-import { Form, FormBlock, FormItem, FormItemField } from "../src";
-import { ValidateTrigger } from "../src/ValidateUtils/ValidateTrigger";
-import { FormMethods } from "../src/interface";
-import { FieldConfig, ValidateConfig } from "../src/ValidateUtils/ValidateInterface";
-import { ValidateError } from "../src/ValidateUtils/FormValidate";
+import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
+import "../src/assets/index";
+import "./index.scss";
 
-/**
- * 民警配置
- */
-interface PoliceConfig {
-    /**
-     * 执勤时间
-     */
-    dutyTime: number;
-    /**
-     * 是否休息
-     */
-    halt: boolean;
-    /**
-     * 内部嵌套
-     */
-    nest2?: {
-        t2_1: string;
-    };
-}
+import { Input, InputGroup, TextArea } from "xy-input";
+import "xy-input/assets/index.css";
 
-/**
- * 民警新增Dto
- */
-interface PoliceAddDto {
-    /**
-     * 民警名称
-     */
-    name: string;
-    /**
-     * 手机号
-     */
-    phone: string;
-    /**
-     * 地址
-     */
-    address: string;
-    /**
-     * 年纪
-     */
-    age: number;
-    /**
-     * 民警配置
-     */
-    config: PoliceConfig;
-}
+import InputNumber from "xy-input-number";
+import "xy-input-number/assets/index.css";
+
+import { Option, OptGroup, Select } from "xy-select";
+import "xy-select/assets/index.css";
+
+import Switch from "xy-switch";
+import "xy-switch/assets/index.css";
+
+import { Checkbox, Radio, CheckboxGroup, RadioGroup } from "xy-checkbox";
+import "xy-checkbox/assets/index.css";
+
+import { Button, ButtonGroup } from "xy-button";
+import "xy-button/assets/index.css";
 
 export default function() {
-    let formMethods: FormMethods;
-    const policeAddDto: PoliceAddDto = {
-        name: undefined,
-        phone: undefined,
-        age: undefined,
-        address: "默认地址",
-        config: {
-            dutyTime: undefined,
-            halt: false,
-            nest2: {
-                t2_1: "12"
-            }
-        }
-    };
-
-    const rule: ValidateConfig<PoliceAddDto> = {
-        name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
-        phone: [{ name: "Required" }],
-        address: [{ name: "Required" }],
-        age: [{ name: "Required" }],
-        config: {
-            dutyTime: [{ name: "Required" }],
-            halt: [{ name: "Required" }],
-            nest2: {
-                t2_1: [{ name: "Required" }]
-            }
-        }
-    };
-
-    function onFieldChange(prop: string, value: any) {
-        console.log("-onFieldChange", prop, value);
-    }
-
-    function onSubmitBefore(data: PoliceAddDto) {
-        console.log("-onSubmitBefore", data);
-    }
-
-    function onSubmit(data: PoliceAddDto) {
-        console.log("-onSubmit", data);
-    }
-
-    function onValidateFail(error: ValidateError, data: PoliceAddDto) {
-        console.log("表单验证失败", error.message, error.input);
+    function onSubmit(data: any) {
+        console.log("提交:", data);
     }
 
     return (
-        <div>
-            <h1>简单演示</h1>
-
-            <Form defaultModel={policeAddDto} validConfig={rule} onValidateFail={onValidateFail} onFieldChange={onFieldChange} onSubmitBefore={onSubmitBefore} onSubmit={onSubmit} getFormMethods={(methods) => (formMethods = methods)}>
-                <FormItem label="民警名称" prop="name">
-                    <input type="text" />
+        <div className="form-demo" style={{ width: "500px" }}>
+            <Form labelWidth="100px" onSubmit={onSubmit}>
+                <FormItem label="证件信息">
+                    <InputGroup compact={true}>
+                        <FormItemField label="证件类型" prop="idType">
+                            <Select style={{ width: "30%" }}>
+                                <Option>身份证</Option>
+                                <Option>军人证</Option>
+                            </Select>
+                        </FormItemField>
+                        <FormItemField label="证件号" prop="idNumber">
+                            <Input style={{ width: "70%" }} />
+                        </FormItemField>
+                    </InputGroup>
                 </FormItem>
-                <FormItem label="手机号" prop="phone">
-                    <input type="text" />
+                <FormItem label="活动名称" prop="name">
+                    <Input />
                 </FormItem>
-                <FormItem label="年龄" prop="age">
-                    <input type="number" />
+                <FormItem label="活动天数" prop="day">
+                    <InputNumber />
                 </FormItem>
-                <FormItem label="地址" prop="address">
-                    <input type="text" />
+                <FormItem label="活动区域" prop="region">
+                    <Select>
+                        <Option>区域A</Option>
+                        <Option>区域B</Option>
+                    </Select>
                 </FormItem>
-
-                <FormBlock prop="config">
-                    <FormItem label="执勤时间" prop="dutyTime">
-                        <input type="number" />
-                    </FormItem>
-                    <FormBlock prop="nest2">
-                        <FormItem label="深层嵌套" prop="t2_1">
-                            <input type="string" />
-                        </FormItem>
-                    </FormBlock>
-                </FormBlock>
-                <button>提交</button>
-                <input type="reset" value="重置" />
+                <FormItem label="即时配送" prop="delivery" valueKey="checked">
+                    <Switch />
+                </FormItem>
+                <FormItem label="活动性质" prop="type">
+                    <CheckboxGroup>
+                        <Checkbox value="A">美食/餐厅线上活动</Checkbox>
+                        <Checkbox value="B">地推活动</Checkbox>
+                        <Checkbox value="C">线下主题活动</Checkbox>
+                        <Checkbox value="D">单纯品牌曝光</Checkbox>
+                    </CheckboxGroup>
+                </FormItem>
+                <FormItem label="特殊资源" prop="resource">
+                    <RadioGroup>
+                        <Radio value="A">线上品牌商赞助</Radio>
+                        <Radio value="B">线下场地免费</Radio>
+                    </RadioGroup>
+                </FormItem>
+                <FormItem label="活动形式" prop="desc">
+                    <TextArea autosize={{ minRows: 5, maxRows: 5 }} />
+                </FormItem>
+                <FormItem label="">
+                    <Button type="primary">提交</Button>
+                    <FormRestButton>
+                        <Button>重置</Button>
+                    </FormRestButton>
+                </FormItem>
             </Form>
-
-            <button onClick={() => console.log(formMethods.getFieldValue("name"))}>获取字段值</button>
-            <button onClick={() => formMethods.setFieldValue("name", "123")}>设置字段值</button>
-            <button onClick={() => formMethods.resetFields()}>重置</button>
-            <button onClick={() => console.log(formMethods.getFieldLabel("name"))}>获取标签名</button>
-            <button onClick={() => formMethods.submit()}>表单提交</button>
         </div>
     );
 }
