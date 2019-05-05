@@ -23,7 +23,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     const formContext = useContext(FormContext);
     const formItemContext = useContext(FormItemContext);
     const parentProp = blockContext.prop ? blockContext.prop + Separator : "";
-    const inputRef = useRef<any>();
+    const inputRef = useRef<any>(null);
     const initialValue = useRef(defaultValue || (blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue));
 
     const disabled = formContext.disabled;

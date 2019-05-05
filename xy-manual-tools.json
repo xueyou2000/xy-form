@@ -5,13 +5,13 @@
         "desc": "没有给默认模型和验证规则"
     },
     {
-        "name": "InlineForm",
-        "title": "内联表单",
-        "desc": "设置 inline 属性启用内联表单"
-    },
-    {
         "name": "DefaultAndFValidate",
         "title": "默认值和验证配置",
         "desc": "能够从defaultModel里获取默认值，并且值更改时候也会设置回去，所以defaultModel应该是一个ref"
+    },
+    {
+        "name": "InlineForm",
+        "title": "内联表单",
+        "desc": "设置 inline 属性启用内联表单"
     }
 ]

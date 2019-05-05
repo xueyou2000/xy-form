@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
-import "../src/assets/index";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";

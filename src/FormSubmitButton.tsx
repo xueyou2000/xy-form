@@ -5,7 +5,7 @@ import { FormContext } from "./Context/FormContext";
  */
 export default function FormSubmitButton({ children }: { children: React.ReactNode }) {
     const context = useContext(FormContext);
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(null);
 
     function clickHande(e: React.MouseEvent<HTMLButtonElement>) {
         setLoading(true);
