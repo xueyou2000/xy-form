@@ -149,6 +149,11 @@ ReactDOM.render(
 ```ts
 export interface FormMethods {
     /**
+     * 设置模型值
+     * @description 快速设置整个模型的值
+     */
+    setModel: (model: any) => any;
+    /**
      * 获取字段值
      */
     getFieldValue: (prop: string) => any;

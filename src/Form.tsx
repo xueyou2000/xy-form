@@ -28,7 +28,7 @@ export function Form(props: FormProps) {
         onSubmit,
         disabled = false,
         trigger = ValidateTrigger.change,
-        labelPosition = "left",
+        labelPosition = "right",
         labelWidth = "85px",
         inline = false,
         ...rest

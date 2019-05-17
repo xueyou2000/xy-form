@@ -91,6 +91,11 @@ export interface FormProps<T = {}> extends Partial<FormContextState> {
 
 export interface FormMethods {
     /**
+     * 设置模型值
+     * @description 快速设置整个模型的值
+     */
+    setModel: <ModelValue>(model: ModelValue) => void;
+    /**
      * 获取字段值
      */
     getFieldValue: (prop: string) => any;
@@ -129,7 +134,7 @@ export interface FormMethods {
     /**
      * 表单提交
      */
-    submit: (uncaught?: boolean) => Promise<any>;
+    submit: <T>(uncaught?: boolean) => Promise<T>;
     /**
      * 获取数据
      */

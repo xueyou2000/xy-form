@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.92",
+    "version": "0.0.93",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
@@ -43,20 +43,20 @@
         "@types/react-dom": "16.8.2",
         "quick-react-scripts": "1.1.9",
         "react-testing-library": "^6.0.0",
-        "xy-button": "^1.0.1",
+        "xy-button": "^1.0.2",
         "xy-checkbox": "1.2.2",
-        "xy-grid": "^0.0.5",
-        "xy-input": "0.0.61",
+        "xy-grid": "^0.0.6",
+        "xy-input": "0.0.91",
         "xy-input-number": "0.1.0",
         "xy-manual-tools": "0.1.4",
-        "xy-select": "1.0.5",
-        "xy-switch": "0.0.7"
+        "xy-select": "1.0.82",
+        "xy-switch": "0.0.8"
     },
     "dependencies": {
         "classnames": "^2.2.6",
         "react": "^16.8.2",
         "react-dom": "^16.8.2",
-        "utils-hooks": "0.0.69",
+        "utils-hooks": "0.0.71",
         "validate-methods": "^1.0.53",
         "validate-provider": "^1.0.33",
         "validate-runner": "^1.0.22"
@@ -67,7 +67,7 @@
     },
     "jest": {
         "transformIgnorePatterns": [
-            "<rootDir>/node_modules/(?!(utils-hooks|validate-methods|validate-provider|validate-runner))"
+            "<rootDir>/node_modules/(?!(utils-hooks|validate-methods|validate-provider|validate-runner|xy-select|utils-dom|xy-empty|xy-trigger))"
         ]
     }
 }

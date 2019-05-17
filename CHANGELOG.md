@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.93 (Fri May 17 2019)
+
+-   标签默认右对齐
+-   `FormMehhods`增加`setModel(model)`方法, 快速设置模型值
+
 ## 0.0.92 (Sun May 05 2019)
 
 -   更新依赖

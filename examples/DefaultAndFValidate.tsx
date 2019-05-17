@@ -36,6 +36,7 @@ interface Model {
     day: number;
     day2: number;
     region: string;
+    phone?: string;
     delivery: boolean;
     type: string[];
     resource: string;
@@ -53,6 +54,7 @@ export default function() {
         name: "活动1",
         day: 2,
         day2: 10,
+        phone: null,
         region: "区域B",
         delivery: true,
         type: ["B", "C"],
@@ -69,6 +71,7 @@ export default function() {
         name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
         day: [{ name: "Required" }],
         day2: [{ name: "Required" }],
+        phone: [{ name: "Required" }, { name: "PhoneNo" }],
         region: [{ name: "Required" }],
         delivery: [{ name: "Required" }],
         type: [{ name: "Required" }],
@@ -85,6 +88,25 @@ export default function() {
 
     function onValidateFail(error: ValidateError, data: Model) {
         console.log("表单验证失败", data, error.message, error.input);
+    }
+
+    function setModel() {
+        formMethods.setModel({
+            certInfo: {
+                idType: "军人证",
+                idNumber: "XXXXXX-00001",
+                age: 15
+            },
+            name: "活动1",
+            day: 2,
+            day2: 10,
+            phone: "asdsadsa",
+            region: "区域B",
+            delivery: true,
+            type: ["B", "C"],
+            resource: "B",
+            desc: "默认描述..."
+        });
     }
 
     return (
@@ -110,6 +132,9 @@ export default function() {
                     </FormBlock>
                 </FormItem>
                 <FormItem label={<span>活动名称</span>} prop="name">
+                    <Input />
+                </FormItem>
+                <FormItem label="手机号" prop="phone">
                     <Input />
                 </FormItem>
                 <FormItem label="活动天数区间">
@@ -164,6 +189,7 @@ export default function() {
                     <FormRestButton>
                         <Button>重置</Button>
                     </FormRestButton>
+                    <Button onClick={setModel}>主动设置模型</Button>
                 </FormItem>
             </Form>
         </div>

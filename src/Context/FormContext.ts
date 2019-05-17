@@ -5,7 +5,7 @@ import { ValidateTrigger } from "../ValidateUtils/ValidateTrigger";
 export const DefaultFormContext: FormContextState = {
     disabled: false,
     trigger: ValidateTrigger.change,
-    labelPosition: "left",
+    labelPosition: "right",
     labelWidth: "90px",
     inline: false,
     formMethods: null

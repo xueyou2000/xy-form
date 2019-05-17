@@ -205,6 +205,21 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         }
     }
 
+    function isObject(obj: any) {
+        return Object.prototype.toString.call(obj) === "[object Object]";
+    }
+
+    function setModel(model: any, fullProp?: string) {
+        const parentProp = fullProp ? fullProp + Separator : "";
+        if (!model || !isObject(model)) {
+            setFieldValue(fullProp, model);
+            return;
+        }
+        for (let prop in model) {
+            setModel(model[prop], parentProp + prop);
+        }
+    }
+
     return {
         getFieldValue,
         setFieldValue,
@@ -216,6 +231,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         getFieldLabel,
         setFieldValidateResult,
         toData,
+        setModel,
         submit
     };
 }
