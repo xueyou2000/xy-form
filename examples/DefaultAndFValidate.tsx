@@ -101,6 +101,7 @@ export default function() {
             day: 2,
             day2: 10,
             phone: "asdsadsa",
+            xx: 123,
             region: "区域B",
             delivery: true,
             type: ["B", "C"],

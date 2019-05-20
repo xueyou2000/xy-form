@@ -210,9 +210,14 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
     }
 
     function setModel(model: any, fullProp?: string) {
+        const mapper = fieldMapper.current;
+
         const parentProp = fullProp ? fullProp + Separator : "";
         if (!model || !isObject(model)) {
-            setFieldValue(fullProp, model);
+            if (mapper.has(fullProp)) {
+                const state = mapper.get(fullProp);
+                state.setValue(model);
+            }
             return;
         }
         for (let prop in model) {
