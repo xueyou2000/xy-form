@@ -120,7 +120,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
                   key: prop,
                   ref: inputRef,
                   name: parentProp + prop,
-                  disabled: disabled,
+                  disabled: "disabled" in child.props ? child.props.disabled : disabled,
                   onBlur: blurHandle,
                   onChange: changeHandle,
                   className: classNames(child.props.className, validateResult.status ? "" : "valid-error")
