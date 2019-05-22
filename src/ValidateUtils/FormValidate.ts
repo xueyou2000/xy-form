@@ -56,7 +56,7 @@ export function FieldValidate(value: any, configs: FieldConfig[] = [], params: V
                     errMsg: msg,
                     format: config.format
                 });
-                runner.add(new ValidateRunnerElement(config.name, value, ...[...(config.params || []), input]));
+                runner.add(new ValidateRunnerElement(config.name, value, [...(config.params || []), input]));
             }
         }
     });

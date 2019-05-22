@@ -76,7 +76,7 @@ export default function() {
         delivery: [{ name: "Required" }],
         type: [{ name: "Required" }],
         resource: [{ name: "Required" }],
-        desc: [{ name: "Required" }]
+        desc: [{ name: "Required" }, { name: "RangeLength", params: [2, 16] }]
     };
 
     const [min, setMin] = useState(model.current.day);
