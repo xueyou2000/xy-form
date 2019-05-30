@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
 import "./index.scss";
 
@@ -20,10 +20,27 @@ import "xy-checkbox/assets/index.css";
 import { Button, ButtonGroup } from "xy-button";
 import "xy-button/assets/index.css";
 
+import { Row, Col } from "xy-grid";
+import "xy-grid/assets/index.css";
+
+import { TimeSelect } from "xy-time-select";
+import "xy-time-select/assets/index.css";
+
+import { TimePicker } from "xy-time-picker";
+import "xy-time-picker/assets/index.css";
+
+import { DatePicker, DateRangePicker } from "xy-date-picker";
+import "xy-date-picker/assets/index.css";
+
+import { dateParse } from "utils-dom";
+
 export default function() {
     function onSubmit(data: any) {
         console.log("提交:", data);
     }
+
+    const [start, setStart] = useState(null);
+    const [end, setEnd] = useState(null);
 
     return (
         <div className="form-demo" style={{ width: "500px" }}>
@@ -52,6 +69,32 @@ export default function() {
                         <Option>区域A</Option>
                         <Option>区域B</Option>
                     </Select>
+                </FormItem>
+                <FormItem label="活动日期">
+                    <Row>
+                        <Col span={11}>
+                            <FormItemField label="活动开始日期" prop="startDate">
+                                <DatePicker max={end} onChange={(v) => setStart(dateParse(v))} />
+                            </FormItemField>
+                        </Col>
+                        <Col className="line" span={2}>
+                            -
+                        </Col>
+                        <Col span={11}>
+                            <FormItemField label="活动结束日期" prop="endDate">
+                                <DatePicker min={start} onChange={(v) => setEnd(dateParse(v))} />
+                            </FormItemField>
+                        </Col>
+                    </Row>
+                </FormItem>
+                <FormItem label="日期范围" prop="date-range">
+                    <DateRangePicker />
+                </FormItem>
+                <FormItem label="时间选择" prop="time-picker">
+                    <TimePicker />
+                </FormItem>
+                <FormItem label="时间下拉" prop="time-select">
+                    <TimeSelect />
                 </FormItem>
                 <FormItem label="即时配送" prop="delivery" valueKey="checked">
                     <Switch />
