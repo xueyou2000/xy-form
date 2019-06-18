@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.97 (Tue Jun 18 2019)
+
+-   修复`FormItem`处理验证状态时候没有使用一次性对象，导致`setState`还是原始值的问题
+-   `formMethods.submit`函数延长至`onSubmit`函数执行完毕, 之前验证完毕后,`loading`状态就结束了
+
 ## 0.0.96 (Wed May 22 2019)
 
 -   修复验证参数数组被错误解构的 BUG

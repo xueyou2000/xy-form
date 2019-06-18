@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
+import { Form, FormBlock, FormItem, FormItemField, FormRestButton, FormSubmitButton } from "../src";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";
@@ -37,6 +37,12 @@ import { dateParse } from "utils-dom";
 export default function() {
     function onSubmit(data: any) {
         console.log("提交:", data);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log("提交完毕");
+                resolve(data);
+            }, 3000);
+        });
     }
 
     const [start, setStart] = useState(null);
@@ -117,7 +123,9 @@ export default function() {
                     <TextArea autosize={{ minRows: 5, maxRows: 5 }} />
                 </FormItem>
                 <FormItem label="">
-                    <Button type="primary">提交</Button>
+                    <FormSubmitButton>
+                        <Button type="primary">提交</Button>
+                    </FormSubmitButton>
                     <FormRestButton>
                         <Button>重置</Button>
                     </FormRestButton>

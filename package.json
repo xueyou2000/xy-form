@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.96",
+    "version": "0.0.97",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",

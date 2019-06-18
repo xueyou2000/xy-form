@@ -173,8 +173,10 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         return validateFunc(fieldMapper)
             .then(() => {
                 if (onSubmit) {
-                    onSubmit(data);
+                    return onSubmit(data);
                 }
+            })
+            .then(() => {
                 if (!uncaught) {
                     return data;
                 }

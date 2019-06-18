@@ -60,7 +60,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     });
 
     function changeValidateResult(result: ValidateResult) {
-        if (lastValidateResult.current.status !== result.status) {
+        if ((result.status === true && lastValidateResult.current.status !== result.status) || !result.status) {
             lastValidateResult.current = result;
             setValidateResult(result);
             if (onValidate) {
@@ -89,6 +89,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
                     changeValidateResult({ status: true, msg: null });
                 })
                 .catch((error) => {
+                    console.log("失败", error);
                     changeValidateResult({ status: false, msg: error.message });
                 });
         }

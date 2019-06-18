@@ -34,7 +34,7 @@ export function FormItem(props: FormItemProps) {
         } else {
             if (i !== -1) {
                 lastFailValida[i].msg = validateResult.msg;
-                setFailValidateResult(lastFailValida);
+                setFailValidateResult([...lastFailValida]);
             } else {
                 lastFailValidateRef.current = [...lastFailValida, { prop, ...validateResult }];
                 setFailValidateResult(lastFailValidateRef.current);
