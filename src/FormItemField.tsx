@@ -89,7 +89,6 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
                     changeValidateResult({ status: true, msg: null });
                 })
                 .catch((error) => {
-                    console.log("失败", error);
                     changeValidateResult({ status: false, msg: error.message });
                 });
         }

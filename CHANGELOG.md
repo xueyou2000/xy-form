@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.98 (Wed Jun 19 2019)
+
+-   增加`formMethods.getFieldInput`获取字段 dom 元素
+
 ## 0.0.97 (Tue Jun 18 2019)
 
 -   修复`FormItem`处理验证状态时候没有使用一次性对象，导致`setState`还是原始值的问题

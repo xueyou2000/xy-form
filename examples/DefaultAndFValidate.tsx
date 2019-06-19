@@ -187,6 +187,8 @@ export default function() {
                 </FormItem>
                 <FormItem label="">
                     <Button type="primary">提交</Button>
+
+                    <Button onClick={() => console.log(formMethods.getFieldInput("phone"))}>获取dom</Button>
                     <FormRestButton>
                         <Button>重置</Button>
                     </FormRestButton>

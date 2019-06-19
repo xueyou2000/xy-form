@@ -150,6 +150,11 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         return state.getLabel();
     }
 
+    function getFieldInput(prop: string) {
+        const state = getFieldItemState(prop);
+        return state.ref.current;
+    }
+
     function toData() {
         const mapper = fieldMapper.current;
         let model: any = {};
@@ -235,6 +240,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         resetFields,
         validateField,
         validateFields,
+        getFieldInput,
         getFieldLabel,
         setFieldValidateResult,
         toData,

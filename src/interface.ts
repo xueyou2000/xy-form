@@ -112,6 +112,10 @@ export interface FormMethods {
      */
     setFieldValidateResult: (prop: string, result: ValidateResult) => void;
     /**
+     * 获取字段输入框元素
+     */
+    getFieldInput: (prop: string) => HTMLElement;
+    /**
      * 重置字段到初始值
      */
     resetField: (prop: string) => void;
