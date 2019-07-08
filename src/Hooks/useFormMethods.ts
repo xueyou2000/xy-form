@@ -3,7 +3,7 @@ import { ValidateTrigger } from "..";
 import { Separator } from "../Form";
 import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
-import { ValidateConfig, ValidateResult } from "../ValidateUtils/ValidateInterface";
+import { ValidateConfig, ValidateResult, FieldConfig } from "../ValidateUtils/ValidateInterface";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -70,7 +70,7 @@ export function setValueByFullProp(model: any, fullProp: string, value: any): an
 
 export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldValidate: FormItemValidateFunc, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string, trigger?: ValidateTrigger) {
     const state = GetFieldItemState(fieldMapper, prop);
-    const configs = getValueByFullProp(validConfig || {}, prop);
+    const configs: FieldConfig[] = validConfig ? getValueByFullProp(validConfig, prop) : [];
     const value = state.getValue();
     const input = state.ref.current;
     const label = state.getLabel();
@@ -245,6 +245,6 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         setFieldValidateResult,
         toData,
         setModel,
-        submit
+        submit,
     };
 }

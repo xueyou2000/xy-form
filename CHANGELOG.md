@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.99 (Mon Jul 08 2019)
+
+-   修复`fieldValidateDefault`时传入空对象问题
+
 ## 0.0.98 (Wed Jun 19 2019)
 
 -   增加`formMethods.getFieldInput`获取字段 dom 元素
