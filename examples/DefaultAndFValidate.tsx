@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
+import { Form, FormBlock, FormArrayBlock, FormItem, FormItemField, FormRestButton } from "../src";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";
@@ -26,11 +26,19 @@ import { ValidateError } from "../src/ValidateUtils/FormValidate";
 import { ValidateConfig } from "../src/ValidateUtils/ValidateInterface";
 import { FormMethods } from "../src/interface";
 
+interface DateRange {
+    start?: string;
+    end?: string;
+}
+
 interface Model {
     certInfo: {
         idType: string;
         idNumber: string;
         age: number;
+    };
+    queryBase: {
+        dateRange: DateRange[];
     };
     name: string;
     day: number;
@@ -49,7 +57,10 @@ export default function() {
         certInfo: {
             idType: "军人证",
             idNumber: "XXXXXX-00001",
-            age: 15
+            age: 15,
+        },
+        queryBase: {
+            dateRange: [],
         },
         name: "活动1",
         day: 2,
@@ -59,14 +70,14 @@ export default function() {
         delivery: true,
         type: ["B", "C"],
         resource: "B",
-        desc: "默认描述..."
+        desc: "默认描述...",
     });
 
     const rule: ValidateConfig<Model> = {
         certInfo: {
             idType: [{ name: "Required" }],
             idNumber: [{ name: "Required" }],
-            age: [{ name: "Required" }]
+            age: [{ name: "Required" }],
         },
         name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
         day: [{ name: "Required" }],
@@ -76,7 +87,7 @@ export default function() {
         delivery: [{ name: "Required" }],
         type: [{ name: "Required" }],
         resource: [{ name: "Required" }],
-        desc: [{ name: "Required" }, { name: "RangeLength", params: [2, 16] }]
+        desc: [{ name: "Required" }, { name: "RangeLength", params: [2, 16] }],
     };
 
     const [min, setMin] = useState(model.current.day);
@@ -91,22 +102,24 @@ export default function() {
     }
 
     function setModel() {
-        formMethods.setModel({
+        formMethods.setModel<Model>({
             certInfo: {
                 idType: "军人证",
                 idNumber: "XXXXXX-00001",
-                age: 15
+                age: 15,
+            },
+            queryBase: {
+                dateRange: [{ start: "kaishi", end: "结束" }],
             },
             name: "活动1",
             day: 2,
             day2: 10,
             phone: "asdsadsa",
-            xx: 123,
             region: "区域B",
             delivery: true,
             type: ["B", "C"],
             resource: "B",
-            desc: "默认描述..."
+            desc: "默认描述...",
         });
     }
 
@@ -132,6 +145,30 @@ export default function() {
                         </InputGroup>
                     </FormBlock>
                 </FormItem>
+
+                <FormItem label="数组测试">
+                    <FormBlock prop="queryBase">
+                        <FormBlock prop="dateRange">
+                            <FormArrayBlock index={0}>
+                                <FormItem label="数组元素1-开始" prop="start">
+                                    <Input />
+                                </FormItem>
+                                <FormItem label="数组元素1-结束" prop="end">
+                                    <Input />
+                                </FormItem>
+                            </FormArrayBlock>
+                            <FormArrayBlock index={1}>
+                                <FormItem label="数组元素2-开始" prop="start">
+                                    <Input />
+                                </FormItem>
+                                <FormItem label="数组元素2-结束" prop="end">
+                                    <Input />
+                                </FormItem>
+                            </FormArrayBlock>
+                        </FormBlock>
+                    </FormBlock>
+                </FormItem>
+
                 <FormItem label={<span>活动名称</span>} prop="name">
                     <Input />
                 </FormItem>
@@ -187,7 +224,7 @@ export default function() {
                 </FormItem>
                 <FormItem label="">
                     <Button type="primary">提交</Button>
-
+                    <Button onClick={() => console.log(formMethods.toData())}>获取值</Button>
                     <Button onClick={() => console.log(formMethods.getFieldInput("phone"))}>获取dom</Button>
                     <FormRestButton>
                         <Button>重置</Button>

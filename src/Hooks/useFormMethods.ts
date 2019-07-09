@@ -4,6 +4,8 @@ import { Separator } from "../Form";
 import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
 import { ValidateConfig, ValidateResult, FieldConfig } from "../ValidateUtils/ValidateInterface";
+import _set from "lodash/set";
+import _get from "lodash/get";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -25,23 +27,7 @@ export function GetFieldItemState(fieldMapper: React.MutableRefObject<Map<string
  * @param fullProp
  */
 export function getValueByFullProp<T = any>(model: any, fullProp: string): T {
-    let prevModel: any = model;
-    let lastValue: T = null;
-    const fields = fullProp.split(Separator);
-    for (let i = 0; i < fields.length; ++i) {
-        const prop = fields[i];
-        if (i !== fields.length - 1) {
-            if (prop in prevModel) {
-                prevModel = prevModel[prop];
-            } else {
-                console.warn("寻找匹配模型值失败", model, fullProp);
-            }
-        } else {
-            lastValue = prevModel[prop];
-        }
-    }
-
-    return lastValue;
+    return _get(model, fullProp);
 }
 
 /**
@@ -50,22 +36,7 @@ export function getValueByFullProp<T = any>(model: any, fullProp: string): T {
  * @param fullProp
  */
 export function setValueByFullProp(model: any, fullProp: string, value: any): any {
-    let prevModel: any = model;
-    const fields = fullProp.split(Separator);
-    for (let i = 0; i < fields.length; ++i) {
-        const prop = fields[i];
-        if (i !== fields.length - 1) {
-            if (prop in prevModel) {
-                prevModel = prevModel[prop];
-            } else {
-                console.warn("寻找匹配模型值失败", model, fullProp);
-            }
-        } else {
-            prevModel[prop] = value;
-        }
-    }
-
-    return prevModel;
+    _set(model, fullProp, value);
 }
 
 export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldValidate: FormItemValidateFunc, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string, trigger?: ValidateTrigger) {
@@ -155,16 +126,6 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         return state.ref.current;
     }
 
-    function toData() {
-        const mapper = fieldMapper.current;
-        let model: any = {};
-        mapper.forEach((state, prop) => {
-            const fields = prop.split(Separator);
-            spliceDate(model, prop, fields);
-        });
-        return model;
-    }
-
     function submit(uncaught?: boolean) {
         const data = toData();
         const validateFunc = onFormValidate || validateFields;
@@ -196,40 +157,21 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
             });
     }
 
-    function spliceDate(model: any, fullProp: string, fields: string[]) {
-        let prevModel: any = model;
-        const value = getFieldValue(fullProp);
-        for (let i = 0; i < fields.length; ++i) {
-            const prop = fields[i];
-            if (i === fields.length - 1) {
-                prevModel[prop] = value;
-            } else {
-                if (!(prop in prevModel)) {
-                    prevModel[prop] = {};
-                }
-                prevModel = prevModel[prop];
-            }
-        }
-    }
-
-    function isObject(obj: any) {
-        return Object.prototype.toString.call(obj) === "[object Object]";
-    }
-
-    function setModel(model: any, fullProp?: string) {
+    function toData() {
         const mapper = fieldMapper.current;
+        let model: any = {};
+        mapper.forEach((state, prop) => {
+            const value = getFieldValue(prop);
+            _set(model, prop, value);
+        });
+        return model;
+    }
 
-        const parentProp = fullProp ? fullProp + Separator : "";
-        if (!model || !isObject(model)) {
-            if (mapper.has(fullProp)) {
-                const state = mapper.get(fullProp);
-                state.setValue(model);
-            }
-            return;
-        }
-        for (let prop in model) {
-            setModel(model[prop], parentProp + prop);
-        }
+    function setModel(model: any) {
+        const mapper = fieldMapper.current;
+        mapper.forEach((state, prop) => {
+            state.setValue(_get(model, prop));
+        });
     }
 
     return {

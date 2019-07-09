@@ -276,6 +276,18 @@ export interface FormBlockProps {
     children?: React.ReactNode;
 }
 
+export interface FormArrayBlockProps {
+    /**
+     * 字段数组索引
+     * @description 不能为根字段
+     */
+    index?: number;
+    /**
+     * 内容
+     */
+    children?: React.ReactNode;
+}
+
 export interface FormBlockContextState {
     /**
      * 当前字段域的模型

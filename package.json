@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.99",
+    "version": "0.0.991",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
@@ -54,6 +54,7 @@
     },
     "dependencies": {
         "classnames": "^2.2.6",
+        "lodash": "^4.17.11",
         "react": "^16.8.2",
         "react-dom": "^16.8.2",
         "utils-hooks": "0.0.71",

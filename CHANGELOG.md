@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.991 (Tue Jul 09 2019)
+
+-   支持数组域
+-   使用`lodash`来解析全路径
+
 ## 0.0.99 (Mon Jul 08 2019)
 
 -   修复`fieldValidateDefault`时传入空对象问题
