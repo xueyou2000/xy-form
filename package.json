@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.991",
+    "version": "0.0.992",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
@@ -36,34 +36,34 @@
         "registry": "http://registry.npmjs.org/"
     },
     "devDependencies": {
-        "@types/classnames": "^2.2.7",
-        "@types/jest": "24.0.6",
-        "@types/node": "11.9.4",
-        "@types/react": "16.8.2",
-        "@types/react-dom": "16.8.2",
-        "quick-react-scripts": "1.1.9",
-        "react-testing-library": "^6.0.0",
+        "@testing-library/react": "^9.1.4",
+        "@types/classnames": "^2.2.9",
+        "@types/jest": "24.0.18",
+        "@types/node": "12.7.4",
+        "@types/react": "16.9.2",
+        "@types/react-dom": "16.9.0",
+        "quick-react-scripts": "^1.2.3",
         "xy-button": "^1.0.2",
-        "xy-checkbox": "1.2.31",
+        "xy-checkbox": "^1.2.32",
+        "xy-date-picker": "^0.0.31",
         "xy-grid": "^0.0.6",
-        "xy-input": "0.0.91",
-        "xy-input-number": "0.1.0",
-        "xy-manual-tools": "0.1.4",
-        "xy-select": "1.0.85",
-        "xy-switch": "0.0.8"
+        "xy-input": "^0.0.92",
+        "xy-input-number": "^0.1.22",
+        "xy-manual-tools": "^0.1.66",
+        "xy-select": "^1.0.86",
+        "xy-switch": "^0.0.9",
+        "xy-time-picker": "^0.0.62",
+        "xy-time-select": "^0.0.41"
     },
     "dependencies": {
         "classnames": "^2.2.6",
-        "lodash": "^4.17.11",
-        "react": "^16.8.2",
-        "react-dom": "^16.8.2",
-        "utils-hooks": "0.0.71",
+        "lodash": "^4.17.15",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "utils-hooks": "^0.0.71",
         "validate-methods": "^1.0.53",
         "validate-provider": "^1.0.33",
-        "validate-runner": "^1.0.22",
-        "xy-date-picker": "0.0.31",
-        "xy-time-picker": "0.0.62",
-        "xy-time-select": "0.0.41"
+        "validate-runner": "^1.0.22"
     },
     "repository": {
         "type": "git",
@@ -71,7 +71,7 @@
     },
     "jest": {
         "transformIgnorePatterns": [
-            "<rootDir>/node_modules/(?!(utils-hooks|validate-methods|validate-provider|validate-runner|xy-select|utils-dom|xy-empty|xy-trigger))"
+            "<rootDir>/node_modules/(?!(utils-*|validate-*|xy-*))"
         ]
     }
 }

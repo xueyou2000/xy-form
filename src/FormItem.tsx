@@ -7,12 +7,14 @@ import { FormItemFailResult, FormItemProps } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 
 export function FormItem(props: FormItemProps) {
-    const { prefixCls = "xy-form-item", className, style, labelPosition, label, children, ...rest } = props;
+    const { prefixCls = "xy-form-item", required = false, className, style, labelPosition, label, children, ...rest } = props;
     const context = useContext(FormContext);
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
     // Tips: 通过ref来确保failValidateResult是最新的值, validateChangeHandle函数中failValidateResult总是第一次初始化的值!
     const lastFailValidateRef = useRef<FormItemFailResult[]>(failValidateResult);
-    const classString = classNames(prefixCls, className);
+    const classString = classNames(prefixCls, className, {
+        [`${prefixCls}-required`]: required,
+    });
     const _labelPosition = labelPosition || context.labelPosition;
     const [labelStr, setLabel] = useState(typeof props.label === "string" ? props.label : null);
 
@@ -67,8 +69,12 @@ export function FormItem(props: FormItemProps) {
 
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
-                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>{"prop" in props ? <FormItemField {...rest as any}>{children}</FormItemField> : children}</FormItemContext.Provider>
-                {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : " , "}`)}</span>}
+                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>
+                    {"prop" in props ? <FormItemField {...(rest as any)}>{children}</FormItemField> : children}
+                </FormItemContext.Provider>
+                {failValidateResult.length > 0 && (
+                    <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : " , "}`)}</span>
+                )}
             </div>
         );
     }

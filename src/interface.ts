@@ -316,11 +316,16 @@ export interface FormBlockContextState {
     fieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
 }
 
-export interface FormItemProps<T = any, NormalizeResult = any> extends Pick<Partial<FormItemFieldProps<T, NormalizeResult>>, Exclude<keyof Partial<FormItemFieldProps<T, NormalizeResult>>, "label">> {
+export interface FormItemProps<T = any, NormalizeResult = any>
+    extends Pick<Partial<FormItemFieldProps<T, NormalizeResult>>, Exclude<keyof Partial<FormItemFieldProps<T, NormalizeResult>>, "label">> {
     /**
      * 标签名称
      */
     label?: React.ReactNode;
+    /**
+     * 是否必填
+     */
+    required?: boolean;
     /**
      * 附加类名
      */

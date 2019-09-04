@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, act } from "react-testing-library";
+import { render, fireEvent, act } from "@testing-library/react";
 import { Form, FormItem, FormItemField, FormBlock, ValidateTrigger } from "../src";
 import { FieldConfig } from "../src/ValidateUtils/ValidateInterface";
 import { ValidateParams, FormMethods } from "../src/interface";
@@ -29,7 +29,7 @@ describe("Form", () => {
                         </FormItem>
                     </FormBlock>
                 </FormBlock>
-            </Form>
+            </Form>,
         );
 
         expect(methods.toData()).toEqual({ config: { subCfg: { name: "123" } } });
@@ -44,13 +44,13 @@ describe("Form", () => {
                 </FormItem>
 
                 <input type="reset" value="重置" />
-            </Form>
+            </Form>,
         );
 
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         fireEvent.change(input, { target: { value: "111" } });
         expect(input.value).toBe("111");
-        fireEvent.click(wrapper.getByValue("重置"));
+        fireEvent.click(wrapper.getByDisplayValue("重置"));
         expect(input.value).toBe("111");
     });
 
@@ -64,7 +64,7 @@ describe("Form", () => {
                 </FormItem>
 
                 <button>提交</button>
-            </Form>
+            </Form>,
         );
         fireEvent.click(wrapper.getByText("提交"));
         expect(fn).toBeCalled();
@@ -98,7 +98,7 @@ describe("Form", () => {
                     </FormBlock>
                 </FormBlock>
                 <button>提交</button>
-            </Form>
+            </Form>,
         );
 
         act(() =>
@@ -109,10 +109,10 @@ describe("Form", () => {
                 nest: {
                     next_name: "name1",
                     nest2: {
-                        nest2_name: "name2"
-                    }
-                }
-            })
+                        nest2_name: "name2",
+                    },
+                },
+            }),
         );
 
         expect((wrapper.getByPlaceholderText("请输入姓名") as HTMLInputElement).value).toBe("abc");

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "react-testing-library";
+import { render, fireEvent } from "@testing-library/react";
 import { Form, FormItem, FormItemField, ValidateTrigger } from "../src";
 import { FieldConfig } from "../src/ValidateUtils/ValidateInterface";
 import { ValidateParams } from "../src/interface";
@@ -14,7 +14,7 @@ describe("FormContext", () => {
                 <FormItem prop="age">
                     <input type="number" placeholder="请输入age" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const nameInput = wrapper.getByPlaceholderText("请输入name") as HTMLInputElement;
         const ageInput = wrapper.getByPlaceholderText("请输入age") as HTMLInputElement;
@@ -30,7 +30,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         fireEvent.change(input, { target: { value: "ab" } });
@@ -51,7 +51,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         var form = wrapper.container.querySelector(".xy-form");
         var input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
@@ -66,7 +66,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
 
         expect(label.style.width).toBe("85px");
@@ -80,7 +80,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         var form = wrapper.container.querySelector(".xy-form");
         var input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
@@ -98,7 +98,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         const formItemContent = input.parentElement;
@@ -113,7 +113,7 @@ describe("FormContext", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const form = wrapper.container.querySelector(".xy-form");
         expect(form.classList.contains("xy-form--inline")).toBeTruthy();

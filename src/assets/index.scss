@@ -32,7 +32,8 @@ $FormItemPrefix: "xy-form-item";
         transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
         margin-top: -2px;
         clear: both;
-        font-family: "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: "Monospaced Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+            "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-size: 14px;
     }
 
@@ -45,6 +46,13 @@ $FormItemPrefix: "xy-form-item";
                 border-color: #ff4949;
             }
         }
+    }
+}
+
+.#{$FormItemPrefix}-required {
+    .#{$FormItemPrefix}-label:after {
+        content: "*";
+        color: #ff4949;
     }
 }
 

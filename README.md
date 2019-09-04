@@ -16,7 +16,7 @@
 
 ```bash
 # yarn
-yarn add xy-form utils-hooks validate-methods validate-provider validate-runner classnames
+yarn add xy-form
 ```
 
 ## 使用例子
@@ -36,7 +36,7 @@ ReactDOM.render(
         <button>提交</button>
         <input type="reset" value="重置" />
     </Form>,
-    container
+    container,
 );
 ```
 

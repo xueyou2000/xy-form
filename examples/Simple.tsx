@@ -51,7 +51,7 @@ export default function() {
     return (
         <div className="form-demo" style={{ width: "500px" }}>
             <Form labelWidth="100px" onSubmit={onSubmit}>
-                <FormItem label="证件信息">
+                <FormItem label="证件信息" required={true}>
                     <InputGroup compact={true}>
                         <FormItemField label="证件类型" prop="idType">
                             <Select style={{ width: "30%" }}>

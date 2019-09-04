@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, act } from "react-testing-library";
+import { render, fireEvent, act } from "@testing-library/react";
 import { Form, FormItem, FormItemField, ValidateTrigger } from "../src";
 import { FieldConfig } from "../src/ValidateUtils/ValidateInterface";
 import { ValidateParams, FormMethods } from "../src/interface";
@@ -17,7 +17,7 @@ describe("FormItem", () => {
                         <input type="text" placeholder="请输入2" />
                     </FormItemField>
                 </FormItem>
-            </Form>
+            </Form>,
         );
         act(() => methods.setFieldValidateResult("name", { status: false, msg: "验证失败" }));
         expect(wrapper.getByText("验证失败").classList.contains("xy-form-item-error-msg")).toBeTruthy();
@@ -35,7 +35,7 @@ describe("FormItem", () => {
                         <input type="text" placeholder="请输入2" />
                     </FormItemField>
                 </FormItem>
-            </Form>
+            </Form>,
         );
         act(() => methods.setFieldValidateResult("name", { status: false, msg: "name验证失败" }));
         act(() => methods.setFieldValidateResult("name2", { status: false, msg: "name2验证失败" }));
@@ -55,7 +55,7 @@ describe("FormItem", () => {
                         <input type="text" placeholder="请输入2" />
                     </FormItemField>
                 </FormItem>
-            </Form>
+            </Form>,
         );
         act(() => methods.setFieldValidateResult("name", { status: false, msg: "name验证失败" }));
 

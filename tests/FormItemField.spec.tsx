@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, act } from "react-testing-library";
+import { render, fireEvent, act } from "@testing-library/react";
 import { Form, FormItem, FormItemField, ValidateTrigger } from "../src";
 import { FieldConfig } from "../src/ValidateUtils/ValidateInterface";
 import { ValidateParams, FormMethods } from "../src/interface";
@@ -11,7 +11,7 @@ describe("FormItemField", () => {
                 <FormItemField prop="name" defaultValue="123">
                     <input type="text" placeholder="请输入" />
                 </FormItemField>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         expect(input.value).toBe("123");
@@ -25,7 +25,7 @@ describe("FormItemField", () => {
                 <FormItem prop="name" label="姓名" defaultValue="abc">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         act(() => methods.setFieldValidateResult("name", { status: false, msg: "验证失败" }));
@@ -50,7 +50,7 @@ describe("FormItemField", () => {
                 <FormItem prop="name" label={<span>姓名</span>}>
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
 
         expect(methods.getFieldLabel("name")).toBe("姓名");
@@ -65,7 +65,7 @@ describe("FormItemField", () => {
                         <input type="text" placeholder="请输入2" />
                     </FormItemField>
                 </FormItem>
-            </Form>
+            </Form>,
         );
 
         expect(methods.getFieldLabel("name")).toBe("姓名");
@@ -79,7 +79,7 @@ describe("FormItemField", () => {
                 <FormItem prop="name">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         act(() => methods.setFieldValue("name", "abc"));
@@ -94,7 +94,7 @@ describe("FormItemField", () => {
                 <FormItem prop="name" normalize={(v) => v + "__"}>
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         act(() => methods.setFieldValue("name", "abc"));
@@ -110,7 +110,7 @@ describe("FormItemField", () => {
                 <FormItem prop="name">
                     <input type="text" onChange={fn} placeholder="请输入" />
                 </FormItem>
-            </Form>
+            </Form>,
         );
         const input = wrapper.getByPlaceholderText("请输入") as HTMLInputElement;
         fireEvent.change(input, { target: { value: "gg" } });
