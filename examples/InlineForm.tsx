@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormBlock, FormItem, FormItemField, FormRestButton } from "../src";
+import { Form, FormBlock, FormItem, FormItemField, FormRestButton, FormSubmitButton } from "../src";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";
@@ -30,7 +30,9 @@ export default function() {
                 <Input type="password" placeholder="Password" />
             </FormItem>
             <FormItem>
-                <Button type="primary">Signin</Button>
+                <FormSubmitButton>
+                    <Button type="primary">Signin</Button>
+                </FormSubmitButton>
             </FormItem>
         </Form>
     );

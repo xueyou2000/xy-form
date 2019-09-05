@@ -33,6 +33,11 @@ export interface FormProps<T = {}> extends Partial<FormContextState> {
      */
     children?: React.ReactNode;
     /**
+     * 是否禁用默认表单提交
+     * @description 默认为true
+     */
+    preventDefault?: boolean;
+    /**
      * 规定在发送表单数据之前如何对其进行编码
      */
     enctype?: "text/plain" | "multipart/form-data" | "application/x-www-form-urlencoded";

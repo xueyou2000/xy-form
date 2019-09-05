@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
-import { Form, FormItem, FormItemField, FormBlock, ValidateTrigger } from "../src";
+import { Form, FormItem, FormItemField, FormBlock, ValidateTrigger, FormSubmitButton } from "../src";
 import { FieldConfig } from "../src/ValidateUtils/ValidateInterface";
 import { ValidateParams, FormMethods } from "../src/interface";
 import { Select, Option } from "xy-select";
@@ -62,8 +62,9 @@ describe("Form", () => {
                 <FormItem prop="name" label="姓名">
                     <input type="text" placeholder="请输入" />
                 </FormItem>
-
-                <button>提交</button>
+                <FormSubmitButton>
+                    <button>提交</button>
+                </FormSubmitButton>
             </Form>,
         );
         fireEvent.click(wrapper.getByText("提交"));

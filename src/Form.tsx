@@ -31,13 +31,14 @@ export function Form(props: FormProps) {
         labelPosition = "right",
         labelWidth = "85px",
         inline = false,
+        preventDefault = true,
         ...rest
     } = props;
     const [fieldMapper, formBlockContextState] = useFormBlockState(props);
     const formMethods = useFormMethods(props, fieldMapper);
     const classString = classNames(prefixCls, className, {
         [`${prefixCls}--inline`]: inline,
-        [`${prefixCls}--label-${labelPosition}`]: !!labelPosition
+        [`${prefixCls}--label-${labelPosition}`]: !!labelPosition,
     });
 
     if (getFormMethods) {
@@ -45,12 +46,12 @@ export function Form(props: FormProps) {
     }
 
     function submitHandle(event: React.FormEvent<HTMLFormElement>) {
-        formMethods.submit(true);
-        if (!props.action) {
-            event.stopPropagation();
-            event.preventDefault();
-            return false;
+        if (!preventDefault) {
+            formMethods.submit(true);
         }
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
     }
 
     function restHandle() {

@@ -24,7 +24,7 @@ yarn add xy-form
 ```tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import { Form, Separator, FormBlock, FormItem, FormItemField } from "xy-form";
+import { Form, Separator, FormBlock, FormItem, FormItemField, FormSubmitButton } from "xy-form";
 ReactDOM.render(
     <Form onSubmitBefore={onSubmitBefore} onSubmit={onSubmit}>
         <FormItem label="姓名" prop="name">
@@ -33,7 +33,9 @@ ReactDOM.render(
         <FormItem label="手机号" prop="phone">
             <input type="text" />
         </FormItem>
-        <button>提交</button>
+        <FormSubmitButton>
+            <button>提交</button>
+        </FormSubmitButton>
         <input type="reset" value="重置" />
     </Form>,
     container,

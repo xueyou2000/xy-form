@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, FormBlock, FormArrayBlock, FormItem, FormItemField, FormRestButton } from "../src";
+import { Form, FormBlock, FormArrayBlock, FormItem, FormItemField, FormRestButton, FormSubmitButton } from "../src";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";
@@ -125,7 +125,14 @@ export default function() {
 
     return (
         <div className="form-demo">
-            <Form labelWidth="100px" defaultModel={model.current} validConfig={rule} onSubmit={onSubmit} onValidateFail={onValidateFail} getFormMethods={(methods) => (formMethods = methods)}>
+            <Form
+                labelWidth="100px"
+                defaultModel={model.current}
+                validConfig={rule}
+                onSubmit={onSubmit}
+                onValidateFail={onValidateFail}
+                getFormMethods={(methods) => (formMethods = methods)}
+            >
                 <FormItem label="证件信息">
                     <FormBlock prop="certInfo">
                         <InputGroup compact={true}>
@@ -223,7 +230,9 @@ export default function() {
                     <TextArea autosize={{ minRows: 5, maxRows: 5 }} />
                 </FormItem>
                 <FormItem label="">
-                    <Button type="primary">提交</Button>
+                    <FormSubmitButton>
+                        <Button type="primary">提交</Button>
+                    </FormSubmitButton>
                     <Button onClick={() => console.log(formMethods.toData())}>获取值</Button>
                     <Button onClick={() => console.log(formMethods.getFieldInput("phone"))}>获取dom</Button>
                     <FormRestButton>
