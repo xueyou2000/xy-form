@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.994 (Thu Sep 05 2019)
+
+-   `ValidateTrigger`增加`none`验证事件
+
 ## 0.0.993 (Thu Sep 05 2019)
 
 -   改变表单默认被 button 触发的提交行为

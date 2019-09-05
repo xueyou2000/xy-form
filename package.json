@@ -1,6 +1,6 @@
 {
     "name": "xy-form",
-    "version": "0.0.993",
+    "version": "0.0.994",
     "description": "基于React的表单组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
@@ -61,7 +61,7 @@
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
         "utils-hooks": "^0.0.71",
-        "validate-methods": "^1.0.53",
+        "validate-methods": "^1.0.54",
         "validate-provider": "^1.0.33",
         "validate-runner": "^1.0.22"
     },

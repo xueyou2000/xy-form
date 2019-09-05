@@ -11,7 +11,11 @@ export enum ValidateTrigger {
      */
     change = 4,
     /**
+     * 无, 只会再表单submit时提交
+     */
+    none = 999,
+    /**
      * 二者都是
      */
-    all = 6
+    all = 6,
 }
