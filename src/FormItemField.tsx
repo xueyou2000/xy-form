@@ -43,7 +43,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
         getLabel: () => label,
         getValidateResult: () => validateResult,
         getCanValidate: () => !disabled && !disabledValidate,
-        getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current)
+        getValue: () => (normalize ? normalize(lastValue.current) : lastValue.current),
     });
     // Tips: 由于外部访问时方法都是旧的, 所以需要重新设置
     itemState.current.getLabel = () => label;
@@ -119,12 +119,12 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
                   [valueKey]: value === undefined ? (typeof child.type === "string" ? "" : null) : value,
                   key: prop,
                   ref: inputRef,
-                  name: parentProp + prop,
+                  name: child.props.name || parentProp + prop,
                   disabled: "disabled" in child.props ? child.props.disabled : disabled,
                   onBlur: blurHandle,
                   onChange: changeHandle,
-                  className: classNames(child.props.className, validateResult.status ? "" : "valid-error")
-              })
+                  className: classNames(child.props.className, validateResult.status ? "" : "valid-error"),
+              }),
           )
         : null;
 }

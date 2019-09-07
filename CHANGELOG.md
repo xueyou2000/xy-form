@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.995 (Sat Sep 07 2019)
+
+-   修复`name`传递问题，优先使用元素属性上的值
+
 ## 0.0.994 (Thu Sep 05 2019)
 
 -   `ValidateTrigger`增加`none`验证事件
