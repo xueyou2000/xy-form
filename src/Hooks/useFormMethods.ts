@@ -6,6 +6,7 @@ import { FieldValidate } from "../ValidateUtils/FormValidate";
 import { ValidateConfig, ValidateResult, FieldConfig } from "../ValidateUtils/ValidateInterface";
 import _set from "lodash/set";
 import _get from "lodash/get";
+import _merge from "lodash/merge";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -39,7 +40,13 @@ export function setValueByFullProp(model: any, fullProp: string, value: any): an
     _set(model, fullProp, value);
 }
 
-export function fieldValidateDefault(validConfig: ValidateConfig<any>, onFieldValidate: FormItemValidateFunc, fieldMapper: React.MutableRefObject<Map<string, FormItemState>>, prop: string, trigger?: ValidateTrigger) {
+export function fieldValidateDefault(
+    validConfig: ValidateConfig<any>,
+    onFieldValidate: FormItemValidateFunc,
+    fieldMapper: React.MutableRefObject<Map<string, FormItemState>>,
+    prop: string,
+    trigger?: ValidateTrigger,
+) {
     const state = GetFieldItemState(fieldMapper, prop);
     const configs: FieldConfig[] = validConfig ? getValueByFullProp(validConfig, prop) : [];
     const value = state.getValue();
@@ -164,7 +171,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
             const value = getFieldValue(prop);
             _set(model, prop, value);
         });
-        return model;
+        return _merge(props.defaultModel, model);
     }
 
     function setModel(model: any) {

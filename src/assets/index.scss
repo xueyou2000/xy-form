@@ -105,4 +105,10 @@ $FormItemPrefix: "xy-form-item";
         text-align: left;
         padding: 0 0 10px;
     }
+
+    .#{$FormItemPrefix} .#{$FormItemPrefix},
+    .#{$FormItemPrefix}:last-child,
+    .#{$FormItemPrefix} {
+        margin-bottom: 22px;
+    }
 }

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.996 (Mon Sep 09 2019)
+
+-   修复`toData`逻辑，现在叠加默认模型
+
 ## 0.0.994 (Thu Sep 05 2019)
 
 -   `ValidateTrigger`增加`none`验证事件
