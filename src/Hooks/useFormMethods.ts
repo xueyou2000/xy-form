@@ -171,7 +171,7 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
             const value = getFieldValue(prop);
             _set(model, prop, value);
         });
-        return _merge(props.defaultModel, model);
+        return _merge({}, props.defaultModel, model);
     }
 
     function setModel(model: any) {
