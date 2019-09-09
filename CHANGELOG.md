@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0 (Mon Sep 09 2019)
+
+-   提升版本号
+
 ## 0.0.1 (Mon Sep 09 2019)
 
 -   修复`toData`中的`merge`合并改变了默认模型，导致的 BUG！
