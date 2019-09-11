@@ -7,7 +7,7 @@ import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
 export function FormArrayBlock({ index = 0, children }: FormArrayBlockProps) {
     const context = useContext(FormBlockContext);
 
-    const model = context.model ? context.model : null;
+    const model = context.model ? context.model[index] : null;
     // const parentProp = context.prop ? context.prop + Separator : "";
     const currentProp = `[${index}]`;
 

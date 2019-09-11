@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1 (Wed Sep 11 2019)
+
+-   修复`FormArrayBlock`传递默认模型时没有处理索引的问题
+
 ## 0.2.0 (Mon Sep 09 2019)
 
 -   提升版本号

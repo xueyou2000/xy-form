@@ -109,7 +109,7 @@ export default function() {
                 age: 15,
             },
             queryBase: {
-                dateRange: [{ start: "kaishi", end: "结束" }],
+                dateRange: [{ start: "kaishi", end: "结束" }, { start: "jjjj", end: "eeeee" }],
             },
             name: "活动1",
             day: 2,
