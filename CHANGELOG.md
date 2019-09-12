@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.2 (Thu Sep 12 2019)
+
+-   增加`serialization`序列化属性, 将外部值序列化后再设置
+
 ## 0.2.1 (Wed Sep 11 2019)
 
 -   修复`FormArrayBlock`传递默认模型时没有处理索引的问题

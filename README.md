@@ -91,19 +91,20 @@ ReactDOM.render(
 
 ### FormItem
 
-| 属性             | 说明                                                                | 类型                                                                                                              | 默认值  |
-| ---------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------- |
-| labelPosition    | 标签对齐位置                                                        | "right"/"left"/"top"                                                                                              | "left"  |
-| prop             | 代理字段名                                                          | string                                                                                                            | 无      |
-| valueKey         | 代理值的 key                                                        | string                                                                                                            | "value" |
-| converValue      | 如何从 onChange 转换值                                              | (val: any) => any                                                                                                 | 无      |
-| label            | 中文标签名                                                          | React.ReactNode                                                                                                   | 无      |
-| children         | 代理输入组件                                                        | React.ReactNode                                                                                                   | 无      |
-| trigger          | 默认触发事件                                                        | ValidateTrigger                                                                                                   | 无      |
-| defaultValue     | 默认值                                                              | any                                                                                                               | 无      |
-| normalize        | 规范化函数, 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串 | (value: T) => NormalizeResult                                                                                     | 无      |
-| disabledValidate | 是否禁用验证                                                        | boolean                                                                                                           | 无      |
-| onValidate       | 执行验证事件                                                        | (value: T, validateResult: ValidateResult, input: HTMLElement, normalize?: (value: T) => NormalizeResult) => void | 无      |
+| 属性             | 说明                                                                         | 类型                                                                                                              | 默认值  |
+| ---------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------- |
+| labelPosition    | 标签对齐位置                                                                 | "right"/"left"/"top"                                                                                              | "left"  |
+| prop             | 代理字段名                                                                   | string                                                                                                            | 无      |
+| valueKey         | 代理值的 key                                                                 | string                                                                                                            | "value" |
+| converValue      | 如何从 onChange 转换值                                                       | (val: any) => any                                                                                                 | 无      |
+| label            | 中文标签名                                                                   | React.ReactNode                                                                                                   | 无      |
+| children         | 代理输入组件                                                                 | React.ReactNode                                                                                                   | 无      |
+| trigger          | 默认触发事件                                                                 | ValidateTrigger                                                                                                   | 无      |
+| defaultValue     | 默认值                                                                       | any                                                                                                               | 无      |
+| normalize        | 规范化函数, 比如绑定的是 Date 类型，form 最后同步时可以是日期字符串          | (value: T) => NormalizeResult                                                                                     | 无      |
+| serialization    | 序列化函数, 将外部设置的值,(比如默认值和 getFieldValue 的值进行转换然后设置) | (value: T) => any                                                                                                 | 无      |
+| disabledValidate | 是否禁用验证                                                                 | boolean                                                                                                           | 无      |
+| onValidate       | 执行验证事件                                                                 | (value: T, validateResult: ValidateResult, input: HTMLElement, normalize?: (value: T) => NormalizeResult) => void | 无      |
 
 ## Form
 

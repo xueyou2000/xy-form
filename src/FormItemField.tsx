@@ -17,14 +17,28 @@ function DefaultChangeValue(value: any) {
     return value;
 }
 
+function DefaultSerialization(value: any) {
+    return value;
+}
+
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const { prop, children, defaultValue, normalize, valueKey = "value", converValue = DefaultChangeValue, disabledValidate, onValidate } = props;
+    const {
+        prop,
+        children,
+        defaultValue,
+        normalize,
+        serialization = DefaultSerialization,
+        valueKey = "value",
+        converValue = DefaultChangeValue,
+        disabledValidate,
+        onValidate,
+    } = props;
     const blockContext = useContext(FormBlockContext);
     const formContext = useContext(FormContext);
     const formItemContext = useContext(FormItemContext);
     const parentProp = blockContext.prop ? blockContext.prop + Separator : "";
     const inputRef = useRef<any>(null);
-    const initialValue = useRef(defaultValue || (blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue));
+    const initialValue = useRef(serialization(defaultValue || (blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue)));
 
     const disabled = formContext.disabled;
     const label = props.label || formItemContext.label || "";
@@ -73,12 +87,13 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     }
 
     function changeValue(value: T) {
-        lastValue.current = value;
-        setValue(value);
+        const val = serialization(value);
+        lastValue.current = val;
+        setValue(val);
         if (child.props.onChange) {
-            child.props.onChange(value);
+            child.props.onChange(val);
         }
-        blockContext.fieldChange(prop, value);
+        blockContext.fieldChange(prop, val);
     }
 
     function validate(_trigger?: ValidateTrigger) {

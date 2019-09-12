@@ -214,6 +214,11 @@ export interface FormItemFieldProps<T = any, NormalizeResult = any> {
      */
     normalize?: (value: T) => NormalizeResult;
     /**
+     * 序列化函数
+     * @description 将外部设置的值,(比如默认值和getFieldValue的值进行转换然后设置)
+     */
+    serialization?: (value: T) => NormalizeResult;
+    /**
      * 是否禁用验证
      */
     disabledValidate?: boolean;
