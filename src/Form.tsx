@@ -63,7 +63,7 @@ export function Form(props: FormProps) {
 
     return (
         <form {...rest} className={classString} onSubmit={submitHandle} onReset={restHandle} autoComplete="off">
-            <FormContext.Provider value={{ disabled, trigger, labelPosition, labelWidth, inline, formMethods }}>
+            <FormContext.Provider value={{ disabled, trigger, labelPosition, labelWidth, inline, formMethods, defaultModel }}>
                 <FormBlockContext.Provider value={formBlockContextState}>{children}</FormBlockContext.Provider>
             </FormContext.Provider>
         </form>

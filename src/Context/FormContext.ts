@@ -8,7 +8,8 @@ export const DefaultFormContext: FormContextState = {
     labelPosition: "right",
     labelWidth: "90px",
     inline: false,
-    formMethods: null
+    formMethods: null,
+    defaultModel: null,
 };
 
 export const FormContext = React.createContext<FormContextState>(DefaultFormContext);

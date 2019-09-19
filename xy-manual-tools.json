@@ -13,5 +13,10 @@
         "name": "InlineForm",
         "title": "内联表单",
         "desc": "设置 inline 属性启用内联表单"
+    },
+    {
+        "name": "FullProp",
+        "title": "使用全名",
+        "desc": "也可以不使用声明式的prop, 指定全名, 比如： baseInfo.dateInfo.type"
     }
 ]

@@ -8,6 +8,8 @@ import { Separator } from "./Form";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
+import _get from "lodash/get";
+import { fieldValidateDefault } from "./Hooks/useFormMethods";
 
 function DefaultChangeValue(value: any) {
     // 如果onChange的参数是 event 事件
@@ -33,12 +35,16 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
         disabledValidate,
         onValidate,
     } = props;
+    // 是否使用 blockContext, 如果主动提供全名，baseInfo.dateInfo.type 这种，就不需要使用
+    const useBlockContext = prop.indexOf(".") === -1 && prop.indexOf("[") === -1;
     const blockContext = useContext(FormBlockContext);
     const formContext = useContext(FormContext);
     const formItemContext = useContext(FormItemContext);
-    const parentProp = blockContext.prop ? blockContext.prop + Separator : "";
+    const parentProp = useBlockContext ? (blockContext.prop ? blockContext.prop + Separator : "") : prop;
     const inputRef = useRef<any>(null);
-    const initialValue = useRef(serialization(defaultValue || (blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue)));
+    const blockContextDefault = blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue;
+    const _defaultValue = formContext.defaultModel ? _get(formContext.defaultModel, prop) : null;
+    const initialValue = useRef(serialization(defaultValue || useBlockContext ? blockContextDefault : _defaultValue));
 
     const disabled = formContext.disabled;
     const label = props.label || formItemContext.label || "";

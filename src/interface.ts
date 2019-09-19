@@ -175,6 +175,10 @@ export interface FormContextState {
      * 表单方法
      */
     formMethods: FormMethods;
+    /**
+     * 默认模型
+     */
+    defaultModel?: any;
 }
 
 export interface FormItemFieldProps<T = any, NormalizeResult = any> {

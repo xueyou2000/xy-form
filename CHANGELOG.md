@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0 (Thu Sep 19 2019)
+
+-   增加不使用`FormBlock`时,使用全名映射字段的默认值支持.
+
 ## 0.2.2 (Thu Sep 12 2019)
 
 -   增加`serialization`序列化属性, 将外部值序列化后再设置
