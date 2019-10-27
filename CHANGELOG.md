@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1 (Sun Oct 27 2019)
+
+-   `ValidateTrigger.blur`情况下, 值更改了取消验证失败的状态
+
 ## 0.3.0 (Thu Sep 19 2019)
 
 -   增加不使用`FormBlock`时,使用全名映射字段的默认值支持.

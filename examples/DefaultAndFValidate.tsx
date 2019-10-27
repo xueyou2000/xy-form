@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, FormBlock, FormArrayBlock, FormItem, FormItemField, FormRestButton, FormSubmitButton } from "../src";
+import { Form, FormBlock, FormArrayBlock, FormItem, FormItemField, FormRestButton, FormSubmitButton, ValidateTrigger } from "../src";
 import "./index.scss";
 
 import { Input, InputGroup, TextArea } from "xy-input";
@@ -125,14 +125,7 @@ export default function() {
 
     return (
         <div className="form-demo">
-            <Form
-                labelWidth="100px"
-                defaultModel={model.current}
-                validConfig={rule}
-                onSubmit={onSubmit}
-                onValidateFail={onValidateFail}
-                getFormMethods={(methods) => (formMethods = methods)}
-            >
+            <Form labelWidth="100px" defaultModel={model.current} validConfig={rule} onSubmit={onSubmit} onValidateFail={onValidateFail} getFormMethods={(methods) => (formMethods = methods)}>
                 <FormItem label="证件信息">
                     <FormBlock prop="certInfo">
                         <InputGroup compact={true}>

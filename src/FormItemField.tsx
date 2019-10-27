@@ -24,17 +24,7 @@ function DefaultSerialization(value: any) {
 }
 
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const {
-        prop,
-        children,
-        defaultValue,
-        normalize,
-        serialization = DefaultSerialization,
-        valueKey = "value",
-        converValue = DefaultChangeValue,
-        disabledValidate,
-        onValidate,
-    } = props;
+    const { prop, children, defaultValue, normalize, serialization = DefaultSerialization, valueKey = "value", converValue = DefaultChangeValue, disabledValidate, onValidate } = props;
     // 是否使用 blockContext, 如果主动提供全名，baseInfo.dateInfo.type 这种，就不需要使用
     const useBlockContext = prop.indexOf(".") === -1 && prop.indexOf("[") === -1;
     const blockContext = useContext(FormBlockContext);
@@ -96,6 +86,12 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
         const val = serialization(value);
         lastValue.current = val;
         setValue(val);
+
+        // 触发器ValidateTrigger.blur情况下, 改变值则取消验证失败的状态
+        if (trigger === ValidateTrigger.blur || trigger === ValidateTrigger.none) {
+            changeValidateResult({ status: true, msg: null });
+        }
+
         if (child.props.onChange) {
             child.props.onChange(val);
         }
