@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.2 (Mon Oct 28 2019)
+
+-   尝试使用`lodash-es`来减少打包大小
+
 ## 0.3.1 (Sun Oct 27 2019)
 
 -   `ValidateTrigger.blur`情况下, 值更改了取消验证失败的状态

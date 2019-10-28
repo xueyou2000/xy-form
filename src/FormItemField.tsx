@@ -8,7 +8,7 @@ import { Separator } from "./Form";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import _get from "lodash/get";
+import _get from "lodash-es/get";
 import { fieldValidateDefault } from "./Hooks/useFormMethods";
 
 function DefaultChangeValue(value: any) {
@@ -24,7 +24,17 @@ function DefaultSerialization(value: any) {
 }
 
 export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFieldProps<T, NormalizeResult>) {
-    const { prop, children, defaultValue, normalize, serialization = DefaultSerialization, valueKey = "value", converValue = DefaultChangeValue, disabledValidate, onValidate } = props;
+    const {
+        prop,
+        children,
+        defaultValue,
+        normalize,
+        serialization = DefaultSerialization,
+        valueKey = "value",
+        converValue = DefaultChangeValue,
+        disabledValidate,
+        onValidate,
+    } = props;
     // 是否使用 blockContext, 如果主动提供全名，baseInfo.dateInfo.type 这种，就不需要使用
     const useBlockContext = prop.indexOf(".") === -1 && prop.indexOf("[") === -1;
     const blockContext = useContext(FormBlockContext);

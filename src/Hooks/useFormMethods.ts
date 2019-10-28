@@ -4,9 +4,9 @@ import { Separator } from "../Form";
 import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
 import { ValidateConfig, ValidateResult, FieldConfig } from "../ValidateUtils/ValidateInterface";
-import _set from "lodash/set";
-import _get from "lodash/get";
-import _merge from "lodash/merge";
+import _set from "lodash-es/set";
+import _get from "lodash-es/get";
+import _merge from "lodash-es/merge";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
