@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.4 (Tue Oct 29 2019)
+
+-   发现使用`lodash-es`比单独引函数更小
+
 ## 0.3.3 (Tue Oct 29 2019)
 
 -   尝试使用`lodash.*`来减少打包大小

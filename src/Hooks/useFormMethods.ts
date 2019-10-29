@@ -4,9 +4,7 @@ import { Separator } from "../Form";
 import { FormItemState, FormItemValidateFunc, FormMethods, FormProps } from "../interface";
 import { FieldValidate } from "../ValidateUtils/FormValidate";
 import { ValidateConfig, ValidateResult, FieldConfig } from "../ValidateUtils/ValidateInterface";
-import _set from "lodash.set";
-import _get from "lodash.get";
-import _merge from "lodash.merge";
+import _ from "lodash-es";
 
 function throwFieldLose(prop: string) {
     throw new Error(`未找到字段: ${prop}`);
@@ -28,7 +26,7 @@ export function GetFieldItemState(fieldMapper: React.MutableRefObject<Map<string
  * @param fullProp
  */
 export function getValueByFullProp<T = any>(model: any, fullProp: string): T {
-    return _get(model, fullProp);
+    return _.get(model, fullProp);
 }
 
 /**
@@ -37,7 +35,7 @@ export function getValueByFullProp<T = any>(model: any, fullProp: string): T {
  * @param fullProp
  */
 export function setValueByFullProp(model: any, fullProp: string, value: any): any {
-    _set(model, fullProp, value);
+    _.set(model, fullProp, value);
 }
 
 export function fieldValidateDefault(
@@ -169,15 +167,15 @@ export default function useFormMethods(props: FormProps, fieldMapper: React.Muta
         let model: any = {};
         mapper.forEach((state, prop) => {
             const value = getFieldValue(prop);
-            _set(model, prop, value);
+            _.set(model, prop, value);
         });
-        return _merge({}, props.defaultModel, model);
+        return _.merge({}, props.defaultModel, model);
     }
 
     function setModel(model: any) {
         const mapper = fieldMapper.current;
         mapper.forEach((state, prop) => {
-            state.setValue(_get(model, prop));
+            state.setValue(_.get(model, prop));
         });
     }
 
