@@ -8,7 +8,7 @@ import { Separator } from "./Form";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import _get from "lodash-es/get";
+import _get from "lodash.get";
 import { fieldValidateDefault } from "./Hooks/useFormMethods";
 
 function DefaultChangeValue(value: any) {
