@@ -8,7 +8,7 @@ import { Separator } from "./Form";
 import { FormItemFieldProps, FormItemState } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import _ from "lodash-es";
+import _get from "lodash-es/get";
 import { fieldValidateDefault } from "./Hooks/useFormMethods";
 
 function DefaultChangeValue(value: any) {
@@ -43,7 +43,7 @@ export function FormItemField<T = any, NormalizeResult = any>(props: FormItemFie
     const parentProp = useBlockContext ? (blockContext.prop ? blockContext.prop + Separator : "") : prop;
     const inputRef = useRef<any>(null);
     const blockContextDefault = blockContext.model && prop in blockContext.model ? blockContext.model[prop] : defaultValue;
-    const _defaultValue = formContext.defaultModel ? _.get(formContext.defaultModel, prop) : null;
+    const _defaultValue = formContext.defaultModel ? _get(formContext.defaultModel, prop) : null;
     const initialValue = useRef(serialization(defaultValue || useBlockContext ? blockContextDefault : _defaultValue));
 
     const disabled = formContext.disabled;

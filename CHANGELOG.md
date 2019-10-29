@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.5 (Tue Oct 29 2019)
+
+-   又回到最初的起点, `lodash-es/xx` 方式才是最小的
+
 ## 0.3.4 (Tue Oct 29 2019)
 
 -   发现使用`lodash-es`比单独引函数更小
