@@ -7017,10 +7017,10 @@ querystringify@^2.1.1:
   resolved "https://registry.npm.taobao.org/querystringify/download/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha1-YOWl/WSn+L+k0qsu1v30yFutFU4=
 
-quick-react-scripts@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.npm.taobao.org/quick-react-scripts/download/quick-react-scripts-1.2.3.tgz#5c11c2da50b9b6c9f7a682a4f81a6e0f6ff22a71"
-  integrity sha1-XBHC2lC5tsn3poKk+BpuD2/yKnE=
+quick-react-scripts@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.npm.taobao.org/quick-react-scripts/download/quick-react-scripts-1.3.2.tgz#66ebec93367bc78eaf65b402a90739b7656dde30"
+  integrity sha1-ZuvskzZ7x46vZbQCqQc5t2Vt3jA=
   dependencies:
     "@babel/core" "^7.3.4"
     "@babel/preset-env" "^7.3.4"
@@ -7092,7 +7092,17 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.11.0, react-dom@^16.8.2, react-dom@^16.8.6, react-dom@^16.9.0:
+react-dom@^16.12.0:
+  version "16.12.0"
+  resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
+  integrity sha1-DaS3FLjRPCA4yTlrVKkrrqYz/hE=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.18.0"
+
+react-dom@^16.8.2, react-dom@^16.9.0:
   version "16.11.0"
   resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.11.0.tgz#7e7c4a5a85a569d565c2462f5d345da2dd849af5"
   integrity sha1-fnxKWoWladVlwkYvXTRdot2EmvU=
@@ -7143,7 +7153,16 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react@^16.11.0, react@^16.8.2, react@^16.8.6, react@^16.9.0:
+react@^16.12.0:
+  version "16.12.0"
+  resolved "https://registry.npm.taobao.org/react/download/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  integrity sha1-DAqcahQkKeNhSDTVp3jhiqeKC4M=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+
+react@^16.8.2, react@^16.9.0:
   version "16.11.0"
   resolved "https://registry.npm.taobao.org/react/download/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
   integrity sha1-0pRUX+YimczugzY1mb+QTkoH/bs=
@@ -7623,6 +7642,14 @@ scheduler@^0.17.0:
   version "0.17.0"
   resolved "https://registry.npm.taobao.org/scheduler/download/scheduler-0.17.0.tgz?cache=0&sync_timestamp=1571927105817&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fscheduler%2Fdownload%2Fscheduler-0.17.0.tgz#7c9c673e4ec781fac853927916d1c426b6f3ddfe"
   integrity sha1-fJxnPk7HgfrIU5J5FtHEJrbz3f4=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.npm.taobao.org/scheduler/download/scheduler-0.18.0.tgz?cache=0&sync_timestamp=1573777131294&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fscheduler%2Fdownload%2Fscheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
+  integrity sha1-WQGtZlm8HY8/2vNut6Z7DWdGscQ=
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -8713,11 +8740,6 @@ utils-dom@^0.0.70:
   resolved "https://registry.npm.taobao.org/utils-dom/download/utils-dom-0.0.70.tgz#0c2a8a9d3224baa9f008eccecc35645ed431ffd5"
   integrity sha1-DCqKnTIkuqnwCOzOzDVkXtQx/9U=
 
-utils-hooks@0.0.69:
-  version "0.0.69"
-  resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.69.tgz#b711fb1aaea7056f3ad662db5e71cfd034ca71af"
-  integrity sha1-txH7Gq6nBW861mLbXnHP0DTKca8=
-
 utils-hooks@0.0.71, utils-hooks@^0.0.71:
   version "0.0.71"
   resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.71.tgz#d26d8fb6d2a5bffebc50fa7f190b85d195759706"
@@ -9218,16 +9240,6 @@ xy-empty@^0.0.9:
     react "^16.8.2"
     react-dom "^16.8.2"
 
-xy-grid@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npm.taobao.org/xy-grid/download/xy-grid-0.0.6.tgz#064f630d4f2f75af3dd6a8036531f0a34e748f63"
-  integrity sha1-Bk9jDU8vda891qgDZTHwo050j2M=
-  dependencies:
-    classnames "^2.2.6"
-    react "^16.8.2"
-    react-dom "^16.8.2"
-    utils-hooks "0.0.69"
-
 xy-grid@^0.0.71:
   version "0.0.71"
   resolved "https://registry.npm.taobao.org/xy-grid/download/xy-grid-0.0.71.tgz#b16420af10edcf5136e559a5170ac4898213be22"
@@ -9264,10 +9276,10 @@ xy-input@^0.0.92:
     react-dom "^16.9.0"
     utils-hooks "^0.0.71"
 
-xy-manual-tools@^0.1.67:
-  version "0.1.67"
-  resolved "https://registry.npm.taobao.org/xy-manual-tools/download/xy-manual-tools-0.1.67.tgz#a000e0e966ad122d7012b85f047fbe9c435a698e"
-  integrity sha1-oADg6WatEi1wErhfBH++nENaaY4=
+xy-manual-tools@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npm.taobao.org/xy-manual-tools/download/xy-manual-tools-0.3.0.tgz#13c6d0ee59246b2b46f6a2f23baf05caa2f5ad70"
+  integrity sha1-E8bQ7lkkaytG9qLyO68FyqL1rXA=
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
@@ -9294,8 +9306,8 @@ xy-manual-tools@^0.1.67:
     optimize-css-assets-webpack-plugin "^5.0.1"
     ora "^3.4.0"
     prismjs "^1.16.0"
-    react "^16.8.6"
-    react-dom "^16.8.6"
+    react "^16.12.0"
+    react-dom "^16.12.0"
     react-router-config "^5.0.1"
     react-router-dom "^5.0.1"
     sass-loader "^7.1.0"
@@ -9310,11 +9322,9 @@ xy-manual-tools@^0.1.67:
     webpack-dev-server "^3.3.1"
     webpack-manifest-plugin "^2.0.4"
     xy-divider "^0.0.51"
-    xy-grid "^0.0.6"
-    xy-messagebox "0.0.91"
-    xy-model "^0.0.51"
+    xy-messagebox "^0.0.91"
 
-xy-messagebox@0.0.91, xy-messagebox@^0.0.91:
+xy-messagebox@^0.0.91:
   version "0.0.91"
   resolved "https://registry.npm.taobao.org/xy-messagebox/download/xy-messagebox-0.0.91.tgz#5349b566ec94ecc00efe142b1a7db2325682c5e5"
   integrity sha1-U0m1ZuyU7MAO/hQrGn2yMlaCxeU=
@@ -9327,17 +9337,6 @@ xy-messagebox@0.0.91, xy-messagebox@^0.0.91:
     react-dom "^16.9.0"
     utils-hooks "^0.0.71"
     xy-button "^1.0.2"
-
-xy-model@^0.0.51:
-  version "0.0.51"
-  resolved "https://registry.npm.taobao.org/xy-model/download/xy-model-0.0.51.tgz#6a57c41669f6c41f0f39563880e37b9976067c4c"
-  integrity sha1-alfEFmn2xB8POVY4gON7mXYGfEw=
-  dependencies:
-    classnames "^2.2.6"
-    react "^16.9.0"
-    react-dom "^16.9.0"
-    utils-hooks "^0.0.71"
-    xy-messagebox "^0.0.91"
 
 xy-select@^1.0.87, xy-select@^1.1.1:
   version "1.1.1"

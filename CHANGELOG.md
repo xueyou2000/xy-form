@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.4.0 (Tue Nov 19 2019)
+
+-   修复`react`与`react-dom`版本不一致导致的问题
+-   测试库迁移到`@testing-library/react"`
+
 ## 0.3.5 (Tue Oct 29 2019)
 
 -   又回到最初的起点, `lodash-es/xx` 方式才是最小的
