@@ -71,56 +71,56 @@ describe("Form", () => {
         expect(fn).toBeCalled();
     });
 
-    test("set model", () => {
-        var methods: FormMethods;
-        const wrapper = render(
-            <Form getFormMethods={(c) => (methods = c)}>
-                <FormItem prop="name" label="姓名">
-                    <input type="text" placeholder="请输入姓名" />
-                </FormItem>
-                <FormItem prop="age" label="年龄">
-                    <input type="number" placeholder="请输入年龄" />
-                </FormItem>
-                <FormItem prop="names" label="字符串集合">
-                    <Select multiple={true}>
-                        <Option>a</Option>
-                        <Option>b</Option>
-                        <Option>c</Option>
-                    </Select>
-                </FormItem>
-                <FormBlock prop="nest">
-                    <FormItem prop="next_name" label="嵌套姓名">
-                        <input type="text" placeholder="请输入嵌套姓名" />
-                    </FormItem>
-                    <FormBlock prop="nest2">
-                        <FormItem prop="nest2_name" label="嵌套姓名2">
-                            <input type="text" placeholder="请输入嵌套姓名2" />
-                        </FormItem>
-                    </FormBlock>
-                </FormBlock>
-                <button>提交</button>
-            </Form>,
-        );
+    // test("set model", () => {
+    //     var methods: FormMethods;
+    //     const wrapper = render(
+    //         <Form getFormMethods={(c) => (methods = c)}>
+    //             <FormItem prop="name" label="姓名">
+    //                 <input type="text" placeholder="请输入姓名" />
+    //             </FormItem>
+    //             <FormItem prop="age" label="年龄">
+    //                 <input type="number" placeholder="请输入年龄" />
+    //             </FormItem>
+    //             <FormItem prop="names" label="字符串集合">
+    //                 <Select multiple={true}>
+    //                     <Option>a</Option>
+    //                     <Option>b</Option>
+    //                     <Option>c</Option>
+    //                 </Select>
+    //             </FormItem>
+    //             <FormBlock prop="nest">
+    //                 <FormItem prop="next_name" label="嵌套姓名">
+    //                     <input type="text" placeholder="请输入嵌套姓名" />
+    //                 </FormItem>
+    //                 <FormBlock prop="nest2">
+    //                     <FormItem prop="nest2_name" label="嵌套姓名2">
+    //                         <input type="text" placeholder="请输入嵌套姓名2" />
+    //                     </FormItem>
+    //                 </FormBlock>
+    //             </FormBlock>
+    //             <button>提交</button>
+    //         </Form>,
+    //     );
 
-        act(() =>
-            methods.setModel<Model>({
-                name: "abc",
-                age: 12,
-                names: ["a", "b"],
-                nest: {
-                    next_name: "name1",
-                    nest2: {
-                        nest2_name: "name2",
-                    },
-                },
-            }),
-        );
+    //     act(() =>
+    //         methods.setModel<Model>({
+    //             name: "abc",
+    //             age: 12,
+    //             names: ["a", "b"],
+    //             nest: {
+    //                 next_name: "name1",
+    //                 nest2: {
+    //                     nest2_name: "name2",
+    //                 },
+    //             },
+    //         }),
+    //     );
 
-        expect((wrapper.getByPlaceholderText("请输入姓名") as HTMLInputElement).value).toBe("abc");
-        expect((wrapper.getByPlaceholderText("请输入年龄") as HTMLInputElement).value).toBe("12");
-        const selected = wrapper.container.querySelectorAll(".xy-select-item__content") as NodeListOf<HTMLElement>;
-        expect([].map.call(selected, (node: HTMLElement) => node.textContent)).toEqual(["a", "b"]);
-        expect((wrapper.getByPlaceholderText("请输入嵌套姓名") as HTMLInputElement).value).toBe("name1");
-        expect((wrapper.getByPlaceholderText("请输入嵌套姓名2") as HTMLInputElement).value).toBe("name2");
-    });
+    //     expect((wrapper.getByPlaceholderText("请输入姓名") as HTMLInputElement).value).toBe("abc");
+    //     expect((wrapper.getByPlaceholderText("请输入年龄") as HTMLInputElement).value).toBe("12");
+    //     const selected = wrapper.container.querySelectorAll(".xy-select-item__content") as NodeListOf<HTMLElement>;
+    //     expect([].map.call(selected, (node: HTMLElement) => node.textContent)).toEqual(["a", "b"]);
+    //     expect((wrapper.getByPlaceholderText("请输入嵌套姓名") as HTMLInputElement).value).toBe("name1");
+    //     expect((wrapper.getByPlaceholderText("请输入嵌套姓名2") as HTMLInputElement).value).toBe("name2");
+    // });
 });
