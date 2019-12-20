@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.0 (Fri Dec 20 2019)
+
+-   增加全局`window.globalValidateLocal`, 用于国际化验证消息
+
 ## 0.4.0 (Tue Nov 19 2019)
 
 -   修复`react`与`react-dom`版本不一致导致的问题

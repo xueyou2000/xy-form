@@ -1,7 +1,7 @@
 import * as methods from "validate-methods";
 import { ValidateProvider, ValidateMethodError } from "validate-provider";
 import { ValidateRunnerAll, ValidateRunnerElement } from "validate-runner";
-import { FormValidateLocal } from "./FormValidateLocal";
+import FormValidateLocal from "./FormValidateLocal";
 import { FieldConfig } from "./ValidateInterface";
 import { ValidateTrigger } from "./ValidateTrigger";
 import { ValidateParams } from "../interface";
@@ -48,13 +48,14 @@ export function FieldValidate(value: any, configs: FieldConfig[] = [], params: V
     configs.forEach((config) => {
         if (!config.trigger || !trigger || (config.trigger && trigger && (trigger & config.trigger) !== 0)) {
             if (config.method || config.name in methods) {
-                let msg = config.errMsg || FormValidateLocal[config.name] || "{{NAME}}验证失败";
+                const validateLocal = (window as any).globalValidateLocal || FormValidateLocal;
+                let msg = config.errMsg || validateLocal[config.name] || "{{NAME}}验证失败";
                 msg = msg.replace(/{{NAME}}/g, String(label));
                 provider.addByMethodRegister({
                     name: config.name,
                     method: config.method || methods[config.name],
                     errMsg: msg,
-                    format: config.format
+                    format: config.format,
                 });
                 runner.add(new ValidateRunnerElement(config.name, value, [...(config.params || []), input]));
             }

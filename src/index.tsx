@@ -7,7 +7,7 @@ import FormRestButton from "./FormRestButton";
 import FormSubmitButton from "./FormSubmitButton";
 
 import { ValidateTrigger } from "./ValidateUtils/ValidateTrigger";
-import { FormValidateLocal } from "./ValidateUtils/FormValidateLocal";
+import FormValidateLocal from "./ValidateUtils/FormValidateLocal";
 
 import { FormBlockContext } from "./Context/FormBlockContext";
 import { FormContext } from "./Context/FormContext";

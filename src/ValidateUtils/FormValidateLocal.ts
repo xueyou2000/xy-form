@@ -1,9 +1,10 @@
-export const FormValidateLocal = {
+const FormValidateLocal = {
     // 通用验证===
     Required: "必填",
     MinLength: "长度应小于{0}",
     MaxLength: "长度应大于{0}",
     RangeLength: "长度范围应在{0} ~ {1}之间",
+    EqualLength: "长度应为{0}",
     Min: "值应该小于{0}",
     Max: "值应该大于{0}",
     Range: "值范围应该在{0} ~ {1}之间",
@@ -30,5 +31,7 @@ export const FormValidateLocal = {
     // 数值验证===
     IsDigits: "无效整数",
     IsStep: "不是{0}的倍数",
-    Amount: "无效金额"
+    Amount: "无效金额",
 };
+
+export default FormValidateLocal;
