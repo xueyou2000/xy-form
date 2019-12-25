@@ -82,7 +82,15 @@ export default function() {
         name: [{ name: "Required", errMsg: "{{NAME}}必填" }],
         day: [{ name: "Required" }],
         day2: [{ name: "Required" }],
-        phone: [{ name: "Required" }, { name: "PhoneNo" }],
+        phone: [
+            { name: "Required" },
+            {
+                name: "PhoneNo",
+                on: () => {
+                    return formMethods.getFieldValue("certInfo.idType") === "军人证";
+                },
+            },
+        ],
         region: [{ name: "Required" }],
         delivery: [{ name: "Required" }],
         type: [{ name: "Required" }],
@@ -109,7 +117,10 @@ export default function() {
                 age: 15,
             },
             queryBase: {
-                dateRange: [{ start: "kaishi", end: "结束" }, { start: "jjjj", end: "eeeee" }],
+                dateRange: [
+                    { start: "kaishi", end: "结束" },
+                    { start: "jjjj", end: "eeeee" },
+                ],
             },
             name: "活动1",
             day: 2,

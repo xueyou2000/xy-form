@@ -47,6 +47,9 @@ export function FieldValidate(value: any, configs: FieldConfig[] = [], params: V
 
     configs.forEach((config) => {
         if (!config.trigger || !trigger || (config.trigger && trigger && (trigger & config.trigger) !== 0)) {
+            if (config.on && !config.on(value, params, config)) {
+                return;
+            }
             if (config.method || config.name in methods) {
                 const validateLocal = (window as any).globalValidateLocal || FormValidateLocal;
                 let msg = config.errMsg || validateLocal[config.name] || "{{NAME}}验证失败";

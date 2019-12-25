@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.6.0 (Wed Dec 25 2019)
+
+-   验证配置增加`on`参数, 控制单条验证规则是否生效
+
 ## 0.5.0 (Fri Dec 20 2019)
 
 -   增加全局`window.globalValidateLocal`, 用于国际化验证消息
