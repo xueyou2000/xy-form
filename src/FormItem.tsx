@@ -7,7 +7,7 @@ import { FormItemFailResult, FormItemProps } from "./interface";
 import { ValidateResult } from "./ValidateUtils/ValidateInterface";
 
 export function FormItem(props: FormItemProps) {
-    const { prefixCls = "xy-form-item", required = false, className, style, labelPosition, label, children, ...rest } = props;
+    const { prefixCls = "xy-form-item", required = false, className, style, labelPosition, label, children, suffix, ...rest } = props;
     const context = useContext(FormContext);
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
     // Tips: 通过ref来确保failValidateResult是最新的值, validateChangeHandle函数中failValidateResult总是第一次初始化的值!
@@ -69,12 +69,8 @@ export function FormItem(props: FormItemProps) {
 
         return (
             <div className={`${prefixCls}-content`} style={contentStyle}>
-                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>
-                    {"prop" in props ? <FormItemField {...(rest as any)}>{children}</FormItemField> : children}
-                </FormItemContext.Provider>
-                {failValidateResult.length > 0 && (
-                    <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : " , "}`)}</span>
-                )}
+                <FormItemContext.Provider value={{ onValidateChange: validateChangeHandle, label: labelStr }}>{"prop" in props ? <FormItemField {...(rest as any)}>{children}</FormItemField> : children}</FormItemContext.Provider>
+                {failValidateResult.length > 0 && <span className={`${prefixCls}-error-msg`}>{failValidateResult.map((x, i) => x.msg + `${i === failValidateResult.length - 1 ? "" : " , "}`)}</span>}
             </div>
         );
     }
@@ -83,6 +79,7 @@ export function FormItem(props: FormItemProps) {
         <div className={classString} style={style}>
             {renderLabel()}
             {renderContent()}
+            {suffix}
         </div>
     );
 }

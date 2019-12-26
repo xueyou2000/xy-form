@@ -330,8 +330,7 @@ export interface FormBlockContextState {
     fieldValidate?: (prop: string, value: any, input: HTMLElement, trigger?: ValidateTrigger) => Promise<any>;
 }
 
-export interface FormItemProps<T = any, NormalizeResult = any>
-    extends Pick<Partial<FormItemFieldProps<T, NormalizeResult>>, Exclude<keyof Partial<FormItemFieldProps<T, NormalizeResult>>, "label">> {
+export interface FormItemProps<T = any, NormalizeResult = any> extends Pick<Partial<FormItemFieldProps<T, NormalizeResult>>, Exclude<keyof Partial<FormItemFieldProps<T, NormalizeResult>>, "label">> {
     /**
      * 标签名称
      */
@@ -360,6 +359,10 @@ export interface FormItemProps<T = any, NormalizeResult = any>
      * 内容
      */
     children?: React.ReactNode;
+    /**
+     * 右侧附加内容
+     */
+    suffix?: React.ReactNode;
 }
 
 export interface FormItemFailResult extends ValidateResult {
