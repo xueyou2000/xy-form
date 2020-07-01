@@ -10,12 +10,13 @@ export function FormItem(props: FormItemProps) {
     const { prefixCls = "xy-form-item", required = false, className, style, labelPosition, label, children, suffix, ...rest } = props;
     const context = useContext(FormContext);
     const [failValidateResult, setFailValidateResult] = useState<FormItemFailResult[]>([]);
+    const _labelPosition = labelPosition || context.labelPosition;
     // Tips: 通过ref来确保failValidateResult是最新的值, validateChangeHandle函数中failValidateResult总是第一次初始化的值!
     const lastFailValidateRef = useRef<FormItemFailResult[]>(failValidateResult);
     const classString = classNames(prefixCls, className, {
         [`${prefixCls}-required`]: required,
+        [`${prefixCls}--pos-${_labelPosition}`]: !!_labelPosition,
     });
-    const _labelPosition = labelPosition || context.labelPosition;
     const [labelStr, setLabel] = useState(typeof props.label === "string" ? props.label : null);
 
     function labelMount(labelElement: HTMLElement) {

@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.7.2 (Wed Jul 01 2020)
+
+-   紧急修复上一个版本`FormItem`的样式放错位置
+
+## 0.7.1 (Wed Jul 01 2020)
+
+-   修复`FormItem`的`lablePostion`样式应该高于 form 的配置
+
 ## 0.7.0 (Thu Dec 26 2019)
 
 -   `FormItem`增加`suffix`属性, 用于右侧面板扩展内容
